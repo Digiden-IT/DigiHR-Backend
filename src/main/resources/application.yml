@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/your_database_name
-    username: Mahmuda
-    password: your_database_password
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:postgresql://digihr-db-digidenit-db.f.aivencloud.com:23577/digiHR-db?ssl=require
+    username: avnadmin
+    password: AVNS_NaGpeBaJAzC3YwjqXdd
+    driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 10
       minimum-idle: 2
@@ -12,7 +12,7 @@ spring:
       pool-name: HikariCP
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     show-sql: true
 
 server:
