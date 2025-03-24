@@ -28,7 +28,7 @@ public class SecurityConfig {
 
     private static final String[]  PUBLIC_API_ENDPOINTS = {
             "/auth/**",
-            "/boilerplate-api-docs/**",
+            "/digihr-api-docs/**",
             "/swagger-ui/**",
             "/v3/api-docs/**"
     };
@@ -62,7 +62,6 @@ public class SecurityConfig {
                 .formLogin( AbstractHttpConfigurer::disable )
                 .authorizeHttpRequests(
                         auth -> auth.requestMatchers( PUBLIC_API_ENDPOINTS ).permitAll()
-                                .requestMatchers( "/users" ).hasAuthority( Role.ADMIN.getName() )
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore( jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class )
