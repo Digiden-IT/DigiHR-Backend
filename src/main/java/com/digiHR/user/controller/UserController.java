@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController()
@@ -15,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor( onConstructor_ = @Autowired )
 public class UserController {
 
-    private final UserService userService;
+    private final UserService userService = null;
 
     @PostMapping
     public ResponseEntity<UserResponse> addUser(@RequestBody AddUserRequest request ) {
@@ -34,4 +35,32 @@ public class UserController {
         UserResponse user = userService.getUser( id );
         return ResponseEntity.ok( user );
     }
+
+    @PutMapping( "/{id}")
+    public ResponseEntity<UserResponse> updateUser( @PathVariable Long id, @RequestBody AddUserRequest request ) {
+
+        UserResponse updatedUser = userService.updateUser(id, request);
+
+        return ResponseEntity.ok( updatedUser );
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.ok("User deleted successfully");
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<UserResponse>> filterUsers(
+            @RequestParam(required = false) String department,
+            @RequestParam(required = false) String role,
+            @RequestParam(required = false) Boolean isActive,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String employeeCode,
+            @RequestParam(required = false) String bloodGroup,
+            @RequestParam(required = false) Date dateOfBirth){
+        List<UserResponse> filteredUsers = userService.filterUsers(department, role, isActive, name, employeeCode, bloodGroup,dateOfBirth);
+        return ResponseEntity.ok(filteredUsers);
+    }
+
 }
