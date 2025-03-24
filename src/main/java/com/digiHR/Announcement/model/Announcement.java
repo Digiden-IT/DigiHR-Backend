@@ -23,7 +23,7 @@ public class Announcement {
     @Column(name = "Content")
     private String Description;
 
-    @Column(name = " Posted By")
+    @Column(name = "Posted_by")
     private String author;
 
     @Column(name = "Date")

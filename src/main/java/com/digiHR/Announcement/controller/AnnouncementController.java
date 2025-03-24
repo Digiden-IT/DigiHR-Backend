@@ -13,6 +13,12 @@ import java.util.List;
 @RequestMapping("/announcements")
 public class AnnouncementController {
 
+
+    @RequestMapping("/")
+    public String index() {
+        return "Hello World";
+
+    }
     @Autowired
     private  AnnouncementService announcementService;
 
