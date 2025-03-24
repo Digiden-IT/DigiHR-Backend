@@ -62,7 +62,6 @@ public class SecurityConfig {
                 .formLogin( AbstractHttpConfigurer::disable )
                 .authorizeHttpRequests(
                         auth -> auth.requestMatchers( PUBLIC_API_ENDPOINTS ).permitAll()
-                                .requestMatchers( "/users" ).hasAuthority( Role.ADMIN.getName() )
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore( jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class )
