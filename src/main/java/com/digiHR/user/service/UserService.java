@@ -81,14 +81,15 @@ public class UserService {
     // Filter users based on query parameters
     public List<UserResponse> filterUsers(String department, String role, Boolean isActive, String name, String employeeCode, String bloodGroup, Date dateOfBirth) {
         return userRepository.findAll().stream()
-                .filter(user -> (department == null || user.getDepartment().name().equalsIgnoreCase(department)))
-                .filter(user -> (role == null || user.getRole().name().equalsIgnoreCase(role)))
-                .filter(user -> (isActive == null || user.getIsActive().equals(isActive)))
-                .filter(user -> (name == null || user.getName().toLowerCase().contains(name.toLowerCase())))
-                .filter(user -> (employeeCode == null || user.getEmployeeCode().equalsIgnoreCase(employeeCode)))
-                .filter(user -> (bloodGroup == null || user.getBloodGroup().equalsIgnoreCase(bloodGroup)))
-                .filter(user -> (dateOfBirth == null || user.getDateOfBirth().equals(dateOfBirth.toString())))
+                .filter(user -> (department == null || (user.getDepartment() != null && user.getDepartment().name().equalsIgnoreCase(department))))
+                .filter(user -> (role == null || (user.getRole() != null && user.getRole().name().equalsIgnoreCase(role))))
+                .filter(user -> (isActive == null || Boolean.TRUE.equals(user.getIsActive())))
+                .filter(user -> (name == null || (user.getName() != null && user.getName().toLowerCase().contains(name.toLowerCase()))))
+                .filter(user -> (employeeCode == null || (user.getEmployeeCode() != null && user.getEmployeeCode().equalsIgnoreCase(employeeCode))))
+                .filter(user -> (bloodGroup == null || (user.getBloodGroup() != null && user.getBloodGroup().equalsIgnoreCase(bloodGroup))))
+                .filter(user -> (dateOfBirth == null || (user.getDateOfBirth() != null && user.getDateOfBirth().equals(dateOfBirth.toString()))))
                 .map(UserResponse::new)
                 .collect(Collectors.toList());
     }
+
 }
