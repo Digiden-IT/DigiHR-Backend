@@ -4,8 +4,12 @@ import com.digiHR.user.model.User;
 import com.digiHR.user.repository.UserRepository;
 import com.digiHR.user.request.AddUserRequest;
 import com.digiHR.user.response.UserResponse;
+import com.digiHR.user.utility.exceptions.NotFoundException;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +26,17 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserResponse addUser(AddUserRequest addUserRequest ) {
+    @PersistenceContext
+    private final EntityManager entityManager;
+
+    @CacheEvict( value = "userCache", key = "#email" )
+    public void evictUserCache( String email ) {}
+
+    @CacheEvict( value = "userIdCache", key= "#id" )
+    public void evictUserIdCache( Long id ) {}
+
+
+    public UserResponse addUser( AddUserRequest addUserRequest ) {
         User user = new User( addUserRequest );
         user.setPassword( passwordEncoder.encode( addUserRequest.getPassword() ) );
         user = userRepository.save( user );
@@ -30,43 +44,73 @@ public class UserService {
     }
 
     public List<UserResponse> getUsers() {
-        return userRepository.findAll().stream()
+        return userRepository.findAll()
+                .stream()
                 .map( UserResponse::new )
                 .collect( Collectors.toList() );
     }
 
     public UserResponse getUser( Long id ) {
-        return new UserResponse( Objects.requireNonNull( userRepository.findById( id ).orElse( null ) ) );
+        return new UserResponse( Objects.requireNonNull( userRepository.findById( id )
+                .orElseThrow( () -> new NotFoundException( "user", id ) ) )
+        );
     }
 
 
     public UserResponse updateUser(Long id, AddUserRequest request) {
-        Optional<User> existingUserOpt = userRepository.findById(id);
 
-        if (existingUserOpt.isEmpty()) {
-            throw new RuntimeException("User not found with ID: " + id);
-        }
+        User user = entityManager.getReference( User.class, id );
 
-        User existingUser = existingUserOpt.get();
+        evictUserCache( user.getEmail() );
+        evictUserIdCache( id );
 
         // Update only non-null fields
-        if (request.getName() != null) existingUser.setName(request.getName());
-        if (request.getEmail() != null) existingUser.setEmail(request.getEmail());
-        if (request.getPassword() != null) existingUser.setPassword(passwordEncoder.encode(request.getPassword()));
-        if (request.getPhoneNumber() != null) existingUser.setPhoneNumber(request.getPhoneNumber());
-        if (request.getDesignation() != null) existingUser.setDesignation(request.getDesignation());
-        if (request.getDepartment() != null) existingUser.setDepartment(request.getDepartment());
-        if (request.getGender() != null) existingUser.setGender(request.getGender());
-        if (request.getBloodGroup() != null) existingUser.setBloodGroup(request.getBloodGroup());
-        if (request.getAddress() != null) existingUser.setAddress(request.getAddress());
-        if (request.getEmployeeType() != null) existingUser.setEmployeeType(request.getEmployeeType());
-        if (request.getDateOfJoining() != null) existingUser.setDateOfJoining(request.getDateOfJoining());
-        if (request.getTotalLeaves() != null) existingUser.setTotalLeaves(Integer.valueOf(request.getTotalLeaves()));
-        if (request.getIsActive() != null) existingUser.setIsActive(request.getIsActive());
-        if (request.getRole() != null) existingUser.setRole(request.getRole());
-        if (request.getRefreshToken() != null) existingUser.setRefreshToken(request.getRefreshToken());
+        if (request.getName() != null)
+            user.setName(request.getName());
 
-        User updatedUser = userRepository.save(existingUser);
+        if (request.getEmail() != null)
+            user.setEmail(request.getEmail());
+
+        if (request.getPassword() != null)
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+
+        if (request.getPhoneNumber() != null)
+            user.setPhoneNumber(request.getPhoneNumber());
+
+        if (request.getDesignation() != null)
+            user.setDesignation(request.getDesignation());
+
+        if (request.getDepartment() != null)
+            user.setDepartment(request.getDepartment());
+
+        if (request.getGender() != null)
+            user.setGender(request.getGender());
+
+        if (request.getBloodGroup() != null)
+            user.setBloodGroup(request.getBloodGroup());
+
+        if (request.getAddress() != null)
+            user.setAddress(request.getAddress());
+
+        if (request.getEmployeeType() != null)
+            user.setEmployeeType(request.getEmployeeType());
+
+        if (request.getDateOfJoining() != null)
+            user.setDateOfJoining(request.getDateOfJoining());
+
+        if (request.getTotalLeaves() != null)
+            user.setTotalLeaves(Integer.valueOf(request.getTotalLeaves()));
+
+        if (request.getIsActive() != null)
+            user.setIsActive(request.getIsActive());
+
+        if (request.getRole() != null)
+            user.setRole(request.getRole());
+
+        if (request.getRefreshToken() != null)
+            user.setRefreshToken(request.getRefreshToken());
+
+        User updatedUser = userRepository.save(user);
         return new UserResponse(updatedUser);
     }
 
