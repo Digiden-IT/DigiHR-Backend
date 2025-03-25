@@ -5,13 +5,12 @@ import lombok.Getter;
 
 @Getter
 public enum EmployeeType {
-    OFFICE ( "office" ),
-    REMOTE ( "remote" ),
-    HYBRID ( "hybrid");
-
+    FULLTIME ( "Full-time" ),
+    PARTTIME ( "Part-time" ),
+    CONTRATUAL ( "Contratual" ),;
 
     final String type;
-    EmployeeType(String type) {
+    EmployeeType( String type ) {
         this.type = type;
     }
 

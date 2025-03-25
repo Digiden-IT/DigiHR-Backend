@@ -5,19 +5,16 @@ import lombok.Getter;
 @Getter
 public enum Department {
 
-    HR("hr"),
-    BACKEND("backend"),
-    FRONTEND("frontend"),
-    MARKETING("marketing"),
-    SALES("sales"),
-    OPERATIONS("operations"),
-    ADMIN("admin"),
-    ENGINEERING("engineering"),
+    HR("Hr"),
+    MARKETING("Marketing"),
+    SALES("Sales"),
+    ADMIN("Admin"),
+    TECHNOLOGY("Technology"),
+    FINANCE("Finance"),
     OTHER("other");
-
     final String department;
 
-    Department(String department) {
+    Department( String department ) {
         this.department = department;
     }
 }
