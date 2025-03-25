@@ -1,6 +1,6 @@
 package com.digiHR.Announcement.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.digiHR.Announcement.request.AddAnnouncementRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Entity
 @Data
-@Table (name= "announcments")
+@Table (name= "announcements")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Announcement {
@@ -18,16 +18,20 @@ public class Announcement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = " Title")
+    @Column(name = "title")
     private String title;
 
-    @Column(name = "Content")
-    private String Description;
+    @Column(name = "description")
+    private String description;
 
-    @Column(name = "Posted_by")
-    private String author;
+    @Column(name = "postedBy")
+    private String postedBy;
 
-    @Column(name = "Date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private Date date;
+    @Column(name = "announcementDate")
+    private Date announcementDate;
+
+    public Announcement(AddAnnouncementRequest request) {
+        this.title = request.getTitle();
+        this.description = request.getDescription();
+    }
 }

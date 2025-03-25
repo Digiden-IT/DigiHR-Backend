@@ -1,6 +1,9 @@
 package com.digiHR.Announcement.controller;
 
 import com.digiHR.Announcement.model.Announcement;
+import com.digiHR.Announcement.request.AddAnnouncementRequest;
+import com.digiHR.Announcement.response.AnnouncementResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,41 +12,34 @@ import com.digiHR.Announcement.service.AnnouncementService;
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@RequiredArgsConstructor( onConstructor_ = @Autowired )
 @RequestMapping("/announcements")
 public class AnnouncementController {
 
-
-    @RequestMapping("/")
-    public String index() {
-        return "Hello World";
-
-    }
-    @Autowired
     private  AnnouncementService announcementService;
 
     @GetMapping
     public ResponseEntity<List<Announcement>> getAllAnnouncements() {
-        List<Announcement> ann = announcementService. getAllAnnouncements();
-        return ResponseEntity.ok( ann );
+        List<Announcement> announcement = announcementService. getAllAnnouncements();
+        return ResponseEntity.ok( announcement );
     }
 
     @PostMapping
-    public ResponseEntity<Announcement> createAnnouncement(@RequestBody Announcement announcement) {
-        Announcement ann =announcementService.createAnnouncement(announcement);
-        return ResponseEntity.ok( ann );
+    public ResponseEntity<AnnouncementResponse> createAnnouncement(@RequestBody AddAnnouncementRequest request) {
+        AnnouncementResponse response =announcementService.createAnnouncement( request );
+        return ResponseEntity.ok( response );
     }
 
     @PutMapping
-    public ResponseEntity<Announcement> updateAnnouncement(@RequestBody Announcement announcement) {
-        Announcement ann= announcementService. updateAnnouncement(announcement);
-        return ResponseEntity.ok( ann );
+    public ResponseEntity<Announcement> updateAnnouncement(@RequestBody Announcement announcement ) {
+        announcement= announcementService. updateAnnouncement( announcement );
+        return ResponseEntity.ok( announcement );
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAnnouncement(@PathVariable long id) {
+    public void deleteAnnouncement(@PathVariable long id ) {
 
-        announcementService.deleteAnnouncement(id);
+        announcementService.deleteAnnouncement( id );
     }
 
 }
