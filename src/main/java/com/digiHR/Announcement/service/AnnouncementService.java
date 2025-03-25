@@ -14,11 +14,12 @@ public class AnnouncementService {
     private AnnouncementRepository announcementRepository;
 
     public List<Announcement> getAllAnnouncements() {
+
         return announcementRepository.findAll();
     }
 
-    public void deleteAnnouncement(Announcement ann) {
-        announcementRepository.delete(ann);
+    public void deleteAnnouncement(long id) {
+        announcementRepository.deleteById(id);
     }
 
     public Announcement createAnnouncement(Announcement announcement) {
