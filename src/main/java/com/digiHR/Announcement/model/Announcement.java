@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -28,10 +30,12 @@ public class Announcement {
     private String postedBy;
 
     @Column(name = "announcementDate")
-    private Date announcementDate;
+    private LocalDateTime announcementDate;
 
-    public Announcement(AddAnnouncementRequest request) {
+    public Announcement(AddAnnouncementRequest request, String loggedInUser) {
         this.title = request.getTitle();
         this.description = request.getDescription();
+        this.postedBy = loggedInUser;
+        this.announcementDate = LocalDateTime.now();
     }
 }

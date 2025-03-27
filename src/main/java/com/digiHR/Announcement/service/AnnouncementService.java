@@ -7,6 +7,8 @@ import com.digiHR.Announcement.response.AnnouncementResponse;
 import com.digiHR.user.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,8 +30,12 @@ public class AnnouncementService {
 
     public AnnouncementResponse createAnnouncement(AddAnnouncementRequest request) {
 
-        Announcement announcement = new Announcement( request );
-        announcement= announcementRepository.save( announcement );
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loggedInUser = authentication.getName();
+
+        Announcement announcement = new Announcement(request, loggedInUser);
+        announcement = announcementRepository.save(announcement);
+
         return new AnnouncementResponse( announcement );
     }
 
