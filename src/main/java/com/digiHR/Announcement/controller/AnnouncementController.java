@@ -37,9 +37,13 @@ public class AnnouncementController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAnnouncement(@PathVariable long id ) {
-
-        announcementService.deleteAnnouncement( id );
+    public ResponseEntity<String> deleteAnnouncement(@PathVariable long id) {
+        try {
+            announcementService.deleteAnnouncement(id);
+            return ResponseEntity.ok("Announcement deleted successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 
 }

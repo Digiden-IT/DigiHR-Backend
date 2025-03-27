@@ -5,12 +5,14 @@ import com.digiHR.Announcement.repository.AnnouncementRepository;
 import com.digiHR.Announcement.request.AddAnnouncementRequest;
 import com.digiHR.Announcement.response.AnnouncementResponse;
 import com.digiHR.user.response.UserResponse;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.beans.Transient;
 import java.util.List;
 
 @Service
@@ -24,8 +26,12 @@ public class AnnouncementService {
         return announcementRepository.findAll();
     }
 
+    @Transactional
     public void deleteAnnouncement(long id) {
-        announcementRepository.deleteById( id );
+        if (!announcementRepository.existsById(id)) {
+            throw new RuntimeException("User with ID " + id + " not found");
+        }
+        announcementRepository.deleteById(id);
     }
 
     public AnnouncementResponse createAnnouncement(AddAnnouncementRequest request) {
