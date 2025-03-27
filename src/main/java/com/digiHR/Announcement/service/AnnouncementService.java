@@ -23,7 +23,7 @@ public class AnnouncementService {
     }
 
     public void deleteAnnouncement(long id) {
-        announcementRepository.deleteById(id);
+        announcementRepository.deleteById( id );
     }
 
     public AnnouncementResponse createAnnouncement(AddAnnouncementRequest request) {
@@ -34,6 +34,6 @@ public class AnnouncementService {
     }
 
     public Announcement updateAnnouncement(Announcement announcement) {
-        return announcementRepository.save(announcement);
+        return announcementRepository.save( announcement );
     }
 }

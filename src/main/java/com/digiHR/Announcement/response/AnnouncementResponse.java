@@ -13,7 +13,7 @@ public class AnnouncementResponse {
     private String postedBy;
     private Date announcmentDate;
 
-    public AnnouncementResponse(Announcement announcement){
+    public AnnouncementResponse(Announcement announcement ){
         this.id=announcement.getId();
         this.title=announcement.getTitle();
         this.description=announcement.getDescription();
