@@ -8,6 +8,7 @@ import com.digiHR.Announcement.response.AnnouncementResponse;
 import com.digiHR.user.model.User;
 import com.digiHR.user.repository.UserRepository;
 import com.digiHR.user.response.UserResponse;
+import com.digiHR.user.service.LoggedInUserService;
 import com.digiHR.utility.response.PaginatedApiResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +30,7 @@ import java.util.List;
 public class AnnouncementService {
 
     private AnnouncementRepository announcementRepository;
-    private UserRepository userRepository;
-
+    private  LoggedInUserService loggedInUserService;
     public PaginatedApiResponse<List<AnnouncementResponse>> getAllAnnouncements(GetAnnouncementRequest request, Pageable pageable ) {
 
         Specification<Announcement> announcementSpecification = getAnnouncementSpecification( request );
@@ -70,11 +70,7 @@ public class AnnouncementService {
     }
 
     public AnnouncementResponse createAnnouncement(AddAnnouncementRequest request) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String loggedInUsername = authentication.getName();
-
-        User user = userRepository.findByUsername(loggedInUsername)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        User user= loggedInUserService.getLoginUser();
 
         Announcement announcement = new Announcement(request, user);
         announcement = announcementRepository.save(announcement);

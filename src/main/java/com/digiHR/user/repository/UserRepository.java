@@ -18,6 +18,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "where id = ?1"
     )
     void updateRefreshTokenById( long id, String refreshToken );
-    Optional<User> findByUsername(String username);
 
 }

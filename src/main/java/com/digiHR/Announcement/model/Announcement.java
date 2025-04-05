@@ -27,9 +27,8 @@ public class Announcement {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "postedBy")
     @ManyToOne( fetch = FetchType.LAZY )
-    @JoinColumn( name = "author_id", foreignKey = @ForeignKey( name = "fk_institute_author_id" ) )
+    @JoinColumn( name = "author_id", foreignKey = @ForeignKey( name = "fk_announcement_author_id" ) )
     private User postedBy;
 
 
