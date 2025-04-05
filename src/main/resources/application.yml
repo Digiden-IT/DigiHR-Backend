@@ -23,6 +23,7 @@ server:
 logging:
   level:
     root: INFO
+    org.springframework.security: DEBUG
     com.yourpackage: DEBUG
   file:
     path: logs/application.log

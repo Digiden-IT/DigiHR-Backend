@@ -5,8 +5,8 @@ import lombok.Getter;
 
 @Getter
 public enum EmployeeType {
-    FULLTIME ( "Full-time" ),
-    PARTTIME ( "Part-time" ),
+    FULL_TIME ( "Full-time" ),
+    PART_TIME ( "Part-time" ),
     CONTRATUAL ( "Contratual" ),;
 
     final String type;
