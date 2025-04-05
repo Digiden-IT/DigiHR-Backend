@@ -8,18 +8,19 @@ import java.util.Date;
 
 @Data
 public class AnnouncementResponse {
-    private long id;
+    private Long id;
     private String title;
     private String description;
-    private String postedBy;
+    private String authorName;
     private LocalDateTime announcementDate;
 
-    public AnnouncementResponse(Announcement announcement ){
-        this.id=announcement.getId();
-        this.title=announcement.getTitle();
-        this.description=announcement.getDescription();
-        this.postedBy=announcement.getPostedBy();
-        this.announcementDate=announcement.getAnnouncementDate();
+    public AnnouncementResponse(Announcement announcement) {
+        this.id = announcement.getId();
+        this.title = announcement.getTitle();
+        this.description = announcement.getDescription();
+        this.announcementDate = announcement.getAnnouncementDate();
+        this.authorName = announcement.getPostedBy() != null
+                ? announcement.getPostedBy().getName() : null;
     }
 
 }

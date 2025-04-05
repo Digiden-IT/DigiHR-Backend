@@ -1,6 +1,7 @@
 package com.digiHR.Announcement.model;
 
 import com.digiHR.Announcement.request.AddAnnouncementRequest;
+import com.digiHR.user.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,15 +28,18 @@ public class Announcement {
     private String description;
 
     @Column(name = "postedBy")
-    private String postedBy;
+    @ManyToOne( fetch = FetchType.LAZY )
+    @JoinColumn( name = "author_id", foreignKey = @ForeignKey( name = "fk_institute_author_id" ) )
+    private User postedBy;
+
 
     @Column(name = "announcementDate")
     private LocalDateTime announcementDate;
 
-    public Announcement(AddAnnouncementRequest request, String loggedInUser) {
+    public Announcement(AddAnnouncementRequest request, User user) {
         this.title = request.getTitle();
         this.description = request.getDescription();
-        this.postedBy = loggedInUser;
+        this.postedBy = user;
         this.announcementDate = LocalDateTime.now();
     }
 }

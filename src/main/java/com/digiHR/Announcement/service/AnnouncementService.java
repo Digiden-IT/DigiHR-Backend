@@ -5,6 +5,8 @@ import com.digiHR.Announcement.repository.AnnouncementRepository;
 import com.digiHR.Announcement.request.AddAnnouncementRequest;
 import com.digiHR.Announcement.request.GetAnnouncementRequest;
 import com.digiHR.Announcement.response.AnnouncementResponse;
+import com.digiHR.user.model.User;
+import com.digiHR.user.repository.UserRepository;
 import com.digiHR.user.response.UserResponse;
 import com.digiHR.utility.response.PaginatedApiResponse;
 import jakarta.transaction.Transactional;
@@ -15,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 
@@ -26,6 +29,7 @@ import java.util.List;
 public class AnnouncementService {
 
     private AnnouncementRepository announcementRepository;
+    private UserRepository userRepository;
 
     public PaginatedApiResponse<List<AnnouncementResponse>> getAllAnnouncements(GetAnnouncementRequest request, Pageable pageable ) {
 
@@ -66,15 +70,20 @@ public class AnnouncementService {
     }
 
     public AnnouncementResponse createAnnouncement(AddAnnouncementRequest request) {
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String loggedInUser = authentication.getName();
+        String loggedInUsername = authentication.getName();
 
-        Announcement announcement = new Announcement(request, loggedInUser);
+        User user = userRepository.findByUsername(loggedInUsername)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        Announcement announcement = new Announcement(request, user);
         announcement = announcementRepository.save(announcement);
 
-        return new AnnouncementResponse( announcement );
+        // Return response with author name
+        return new AnnouncementResponse(announcement);
     }
+
+
 
     public Announcement updateAnnouncement(Announcement announcement) {
         return announcementRepository.save( announcement );
