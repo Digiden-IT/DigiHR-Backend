@@ -1,19 +1,31 @@
 package com.digiHR.user.service;
 
+import com.digiHR.user.*;
 import com.digiHR.user.model.User;
 import com.digiHR.user.repository.UserRepository;
 import com.digiHR.user.request.AddUserRequest;
+import com.digiHR.user.request.GetUserRequest;
+import com.digiHR.user.response.FilterOptionResponse;
 import com.digiHR.user.response.UserResponse;
+import com.digiHR.user.utility.exceptions.NotFoundException;
+import com.digiHR.user.utility.response.PaginatedApiResponse;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
+
+
+import static com.digiHR.user.repository.UserSpecification.*;
 
 @Service
 @RequiredArgsConstructor( onConstructor_ = {@Autowired} )
@@ -22,74 +34,99 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserResponse addUser(AddUserRequest addUserRequest ) {
+    @PersistenceContext
+    private final EntityManager entityManager;
+
+    @CacheEvict( value = "userCache", key = "#email" )
+    public void evictUserCache( String email ) {}
+
+    @CacheEvict( value = "userIdCache", key= "#id" )
+    public void evictUserIdCache( Long id ) {}
+
+    public UserResponse addUser( AddUserRequest addUserRequest ) {
         User user = new User( addUserRequest );
         user.setPassword( passwordEncoder.encode( addUserRequest.getPassword() ) );
         user = userRepository.save( user );
         return new UserResponse( user );
     }
 
-    public List<UserResponse> getUsers() {
-        return userRepository.findAll().stream()
-                .map( UserResponse::new )
-                .collect( Collectors.toList() );
-    }
-
     public UserResponse getUser( Long id ) {
-        return new UserResponse( Objects.requireNonNull( userRepository.findById( id ).orElse( null ) ) );
+        return new UserResponse(
+                Objects.requireNonNull( userRepository.findById( id )
+                       .orElseThrow( () -> new NotFoundException( "user", id ) ) )
+        );
     }
 
+    public PaginatedApiResponse<List<UserResponse>> getUsers( GetUserRequest request, Pageable pageable ) {
 
-    public UserResponse updateUser(Long id, AddUserRequest request) {
-        Optional<User> existingUserOpt = userRepository.findById(id);
+        Specification<User> userSpecification = getUserSpecification( request );
+        Page<User> userPage = userRepository.findAll( userSpecification, pageable );
 
-        if (existingUserOpt.isEmpty()) {
-            throw new RuntimeException("User not found with ID: " + id);
-        }
-
-        User existingUser = existingUserOpt.get();
-
-        // Update only non-null fields
-        if (request.getName() != null) existingUser.setName(request.getName());
-        if (request.getEmail() != null) existingUser.setEmail(request.getEmail());
-        if (request.getPassword() != null) existingUser.setPassword(passwordEncoder.encode(request.getPassword()));
-        if (request.getPhoneNumber() != null) existingUser.setPhoneNumber(request.getPhoneNumber());
-        if (request.getDesignation() != null) existingUser.setDesignation(request.getDesignation());
-        if (request.getDepartment() != null) existingUser.setDepartment(request.getDepartment());
-        if (request.getGender() != null) existingUser.setGender(request.getGender());
-        if (request.getBloodGroup() != null) existingUser.setBloodGroup(request.getBloodGroup());
-        if (request.getAddress() != null) existingUser.setAddress(request.getAddress());
-        if (request.getEmployeeType() != null) existingUser.setEmployeeType(request.getEmployeeType());
-        if (request.getDateOfJoining() != null) existingUser.setDateOfJoining(request.getDateOfJoining());
-        if (request.getTotalLeaves() != null) existingUser.setTotalLeaves(Integer.valueOf(request.getTotalLeaves()));
-        if (request.getIsActive() != null) existingUser.setIsActive(request.getIsActive());
-        if (request.getRole() != null) existingUser.setRole(request.getRole());
-        if (request.getRefreshToken() != null) existingUser.setRefreshToken(request.getRefreshToken());
-
-        User updatedUser = userRepository.save(existingUser);
-        return new UserResponse(updatedUser);
-    }
-
-    // Delete a user
-    public void deleteUser(Long id) {
-        if (!userRepository.existsById(id)) {
-            throw new RuntimeException("User not found with ID: " + id);
-        }
-        userRepository.deleteById(id);
-    }
-
-    // Filter users based on query parameters
-    public List<UserResponse> filterUsers(String department, String role, Boolean isActive, String name, String employeeCode, String bloodGroup, Date dateOfBirth) {
-        return userRepository.findAll().stream()
-                .filter(user -> (department == null || (user.getDepartment() != null && user.getDepartment().name().equalsIgnoreCase(department))))
-                .filter(user -> (role == null || (user.getRole() != null && user.getRole().name().equalsIgnoreCase(role))))
-                .filter(user -> (isActive == null || Boolean.TRUE.equals(user.getIsActive())))
-                .filter(user -> (name == null || (user.getName() != null && user.getName().toLowerCase().contains(name.toLowerCase()))))
-                .filter(user -> (employeeCode == null || (user.getEmployeeCode() != null && user.getEmployeeCode().equalsIgnoreCase(employeeCode))))
-                .filter(user -> (bloodGroup == null || (user.getBloodGroup() != null && user.getBloodGroup().equalsIgnoreCase(bloodGroup))))
-                .filter(user -> (dateOfBirth == null || (user.getDateOfBirth() != null && user.getDateOfBirth().equals(dateOfBirth.toString()))))
+        List<UserResponse> userResponseList = userPage.stream()
                 .map(UserResponse::new)
-                .collect(Collectors.toList());
+                .toList();
+
+        return new PaginatedApiResponse<>(
+                userResponseList,
+                pageable.getPageNumber(),
+                userPage.getTotalPages(),
+                userPage.getTotalElements()
+        );
     }
 
+    private Specification<User> getUserSpecification( GetUserRequest request ) {
+
+        return filterByIsActive( request.getIsActive() )
+                .and( filterByIsDeletedNull().or( filterByIsDeletedFalse() ) )
+                .and( filterByRoleIn( List.of( request.getRole() ) ) );
+    }
+
+    public UserResponse updateUser( Long id, AddUserRequest request ) {
+
+        User user = entityManager.getReference( User.class, id );
+        evictUserCache( user.getEmail() );
+        evictUserIdCache( id );
+
+        if ( request.getName() != null )
+            user.setName( request.getName() );
+
+        if ( request.getEmail() != null )
+            user.setEmail( request.getEmail() );
+
+        if ( request.getPhoneNumber() != null )
+            user.setPhoneNumber( request.getPhoneNumber() );
+
+        if ( request.getDesignation() != null )
+            user.setDesignation( request.getDesignation() );
+
+        if ( request.getDepartment() != null )
+            user.setDepartment( request.getDepartment() );
+
+        if ( request.getAddress() != null )
+            user.setAddress( request.getAddress() );
+
+        if ( request.getEmployeeType() != null )
+            user.setEmployeeType( request.getEmployeeType() );
+
+        User updatedUser = userRepository.save( user );
+        return new UserResponse( updatedUser );
+    }
+
+    @Transactional
+    public void deleteUser( Long id ) {
+
+        User user = entityManager.getReference( User.class, id );
+        user.setIsDeleted( true );
+        userRepository.save( user );
+    }
+
+    public FilterOptionResponse getFilterOptions() {
+
+        List<Department> departments = List.of( Department.values() );
+        List<EmployeeType> employeeTypes = List.of( EmployeeType.values() );
+        List<Role> roles = List.of( Role.values() );
+        List<BloodGroup>bloodGroups = List.of( BloodGroup.values() );
+        List<Gender>genders = List.of( Gender.values() );
+        return new FilterOptionResponse( departments, roles, employeeTypes, bloodGroups, genders );
+    }
 }

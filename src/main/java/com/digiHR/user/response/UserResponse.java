@@ -12,7 +12,7 @@ public class UserResponse {
     private String email;
     private Role role;
 
-    public UserResponse( User user) {
+    public UserResponse( User user ) {
         this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();

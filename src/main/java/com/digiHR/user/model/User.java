@@ -1,10 +1,8 @@
 package com.digiHR.user.model;
 
-import com.digiHR.user.Department;
-import com.digiHR.user.EmployeeType;
-import com.digiHR.user.Gender;
-import com.digiHR.user.Role;
+import com.digiHR.user.*;
 import com.digiHR.user.request.AddUserRequest;
+import com.digiHR.user.utility.audit.AuditableEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,73 +10,73 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@Table(name = "users")
+@Table( name = "users" )
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-public class User {
+public class User extends AuditableEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column( name = "name", nullable = false )
     private String name;
 
-    @Column(name = "employee_code", unique = true)
+    @Column( name = "employee_code", unique = true )
     private String employeeCode;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column( name = "email", nullable = false, unique = true )
     private String email;
 
-    @Column(name = "phone_number")
+    @Column( name = "phone_number" )
     private String phoneNumber;
 
-    @Column(name = "date_of_birth")
+    @Column( name = "date_of_birth" )
     private String dateOfBirth;
 
-    @Column(name = "designation")
+    @Column( name = "designation" )
     private String designation;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated( EnumType.STRING )
     @Column(name = "department")
     private Department department;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated( EnumType.STRING )
     @Column(name = "gender")
     private Gender gender;
 
-    @Column(name = "blood_group")
-    private String bloodGroup;
+    @Enumerated( EnumType.STRING )
+    @Column( name = "blood_group" )
+    private BloodGroup bloodGroup;
 
-    @Column(name = "address")
+    @Column( name = "address" )
     private String address;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "employee_type")
+    @Enumerated( EnumType.STRING )
+    @Column( name = "employee_type" )
     private EmployeeType employeeType;
 
-    @Column(name = "date_of_joining")
+    @Column( name = "date_of_joining" )
     private String dateOfJoining;
 
-    @Column(name = "total_leaves")
+    @Column( name = "total_leaves" )
     private Integer totalLeaves;
 
-    @Column(name = "password", nullable = false)
+    @Column( name = "password", nullable = false )
     private String password;
 
-    @Column(name = "is_active", columnDefinition = "boolean default true")
+    @Column( name = "is_active", columnDefinition = "boolean default true" )
     private Boolean isActive = true;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
+    @Enumerated( EnumType.STRING )
+    @Column( name = "role", nullable = false )
     private Role role;
 
-    @Column(name = "refresh_token")
+    @Column( name = "refresh_token" )
     private String refreshToken;
 
-    public User(AddUserRequest addUserRequest) {
+    public User( AddUserRequest addUserRequest ) {
         this.name = addUserRequest.getName();
         this.email = addUserRequest.getEmail();
         this.phoneNumber = addUserRequest.getPhoneNumber();
@@ -90,10 +88,7 @@ public class User {
         this.address = addUserRequest.getAddress();
         this.employeeType = addUserRequest.getEmployeeType();
         this.dateOfJoining = addUserRequest.getDateOfJoining();
-        this.totalLeaves = Integer.valueOf(addUserRequest.getTotalLeaves());
         this.password = addUserRequest.getPassword();
-        this.isActive = addUserRequest.getIsActive() != null ? addUserRequest.getIsActive() : true;
-        this.role = addUserRequest.getRole();
-        this.refreshToken = addUserRequest.getRefreshToken();
     }
+
 }
