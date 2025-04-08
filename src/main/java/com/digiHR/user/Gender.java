@@ -8,7 +8,8 @@ public enum Gender {
     MALE( "Male" ),
     FEMALE( "Female" );
 
-    final String gender;
+    private final String gender;
+
     Gender( String gender ) {
         this.gender = gender;
     }

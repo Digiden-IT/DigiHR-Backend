@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController()
-@RequestMapping("/users")
+@RequestMapping( "/users" )
 @RequiredArgsConstructor( onConstructor_ = @Autowired )
 public class UserController {
 
@@ -39,19 +39,19 @@ public class UserController {
         return ResponseEntity.ok( user );
     }
 
-    @PutMapping( "/{id}")
+    @PutMapping( "/{id}" )
     public ResponseEntity<UserResponse> updateUser( @PathVariable Long id, @RequestBody AddUserRequest request ) {
         UserResponse updatedUser = userService.updateUser( id, request );
         return ResponseEntity.ok( updatedUser );
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping( "/{id}" )
     public ResponseEntity<String> deleteUser( @PathVariable Long id ) {
         userService.deleteUser( id );
         return ResponseEntity.ok( "User deleted successfully" );
     }
 
-    @GetMapping("/filter-options")
+    @GetMapping( "/filter-options" )
     public ResponseEntity<FilterOptionResponse> getFilterOptions() {
         FilterOptionResponse options = userService.getFilterOptions();
         return ResponseEntity.ok( options );
