@@ -17,9 +17,6 @@ public class AddUserRequest {
     private String address;
     private EmployeeType employeeType;
     private String dateOfJoining;
-    private String totalLeaves;
-    private Boolean isActive;
     private Role role;
-    private String refreshToken;
 
 }

@@ -7,11 +7,11 @@ import lombok.Getter;
 public enum EmployeeType {
     FULL_TIME ( "Full-time" ),
     PART_TIME ( "Part-time" ),
-    CONTRATUAL ( "Contratual" ),;
+    CONTRATUAL ( "Contratual" );
 
-    final String type;
+    private final String type;
+
     EmployeeType( String type ) {
         this.type = type;
     }
-
 }

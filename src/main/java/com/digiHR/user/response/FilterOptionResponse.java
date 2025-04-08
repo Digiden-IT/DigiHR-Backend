@@ -18,6 +18,4 @@ public class FilterOptionResponse {
     private List<EmployeeType> employeeTypes;
     private List<BloodGroup> bloodGroups;
     private List<Gender> genders;
-
-
 }

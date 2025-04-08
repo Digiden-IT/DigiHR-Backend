@@ -12,7 +12,8 @@ public enum Department {
     TECHNOLOGY("Technology"),
     FINANCE("Finance"),
     OTHER("other");
-    final String department;
+
+    private final String department;
 
     Department( String department ) {
         this.department = department;

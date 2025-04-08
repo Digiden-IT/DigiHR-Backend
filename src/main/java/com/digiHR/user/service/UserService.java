@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+
 
 import static com.digiHR.user.repository.UserSpecification.*;
 
@@ -50,13 +50,6 @@ public class UserService {
         return new UserResponse( user );
     }
 
-//    public List<UserResponse> getUsers() {
-//        return userRepository.findAll()
-//                .stream()
-//                .map( UserResponse::new )
-//                .collect( Collectors.toList() );
-//    }
-
     public UserResponse getUser( Long id ) {
         return new UserResponse(
                 Objects.requireNonNull( userRepository.findById( id )
@@ -64,10 +57,10 @@ public class UserService {
         );
     }
 
-    public PaginatedApiResponse<List<UserResponse>> getUsers(GetUserRequest request, Pageable pageable) {
-        Specification<User> userSpecification = getUserSpecification(request);
+    public PaginatedApiResponse<List<UserResponse>> getUsers( GetUserRequest request, Pageable pageable ) {
 
-        Page<User> userPage = userRepository.findAll( userSpecification, pageable);
+        Specification<User> userSpecification = getUserSpecification( request );
+        Page<User> userPage = userRepository.findAll( userSpecification, pageable );
 
         List<UserResponse> userResponseList = userPage.stream()
                 .map(UserResponse::new)
@@ -75,7 +68,7 @@ public class UserService {
 
         return new PaginatedApiResponse<>(
                 userResponseList,
-                pageable.getPageNumber(), // <-- get the current page number from the Page object
+                pageable.getPageNumber(),
                 userPage.getTotalPages(),
                 userPage.getTotalElements()
         );
@@ -83,36 +76,22 @@ public class UserService {
 
     private Specification<User> getUserSpecification( GetUserRequest request ) {
 
-        Specification<User> userSpecification = filterByIsActive( request.getIsActive() )
-                .and( filterByIsDeletedNull().or( filterByIsDeletedFalse() ) );
-
-        if( request.getRole() != null )
-            userSpecification = userSpecification.and( filterByRoleIn( List.of( request.getRole() ) ) );
-        else
-            userSpecification = userSpecification.and( filterByRoleIn( List.of( Role.ADMIN, Role.USER ) ) );
-
-        return userSpecification;
+        return filterByIsActive( request.getIsActive() )
+                .and( filterByIsDeletedNull().or( filterByIsDeletedFalse() ) )
+                .and( filterByRoleIn( List.of( request.getRole() ) ) );
     }
 
     public UserResponse updateUser( Long id, AddUserRequest request ) {
 
         User user = entityManager.getReference( User.class, id );
-
         evictUserCache( user.getEmail() );
         evictUserIdCache( id );
 
-        // Update only non-null fields
         if ( request.getName() != null )
             user.setName( request.getName() );
 
         if ( request.getEmail() != null )
             user.setEmail( request.getEmail() );
-
-        if ( request.getDateOfBirth() != null )
-            user.setDateOfBirth( request.getDateOfBirth() );
-
-        if ( request.getPassword() != null )
-            user.setPassword( passwordEncoder.encode(request.getPassword()) );
 
         if ( request.getPhoneNumber() != null )
             user.setPhoneNumber( request.getPhoneNumber() );
@@ -123,38 +102,16 @@ public class UserService {
         if ( request.getDepartment() != null )
             user.setDepartment( request.getDepartment() );
 
-        if ( request.getGender() != null )
-            user.setGender( request.getGender() );
-
-        if ( request.getBloodGroup() != null )
-            user.setBloodGroup( request.getBloodGroup() );
-
         if ( request.getAddress() != null )
             user.setAddress( request.getAddress() );
 
         if ( request.getEmployeeType() != null )
             user.setEmployeeType( request.getEmployeeType() );
 
-        if ( request.getDateOfJoining() != null )
-            user.setDateOfJoining( request.getDateOfJoining() );
-
-        if ( request.getTotalLeaves() != null )
-            user.setTotalLeaves( Integer.valueOf(request.getTotalLeaves()) );
-
-        if ( request.getIsActive() != null )
-            user.setIsActive( request.getIsActive() );
-
-        if ( request.getRole() != null )
-            user.setRole( request.getRole() );
-
-        if ( request.getRefreshToken() != null )
-            user.setRefreshToken( request.getRefreshToken() );
-
         User updatedUser = userRepository.save( user );
         return new UserResponse( updatedUser );
     }
 
-    // Delete a user
     @Transactional
     public void deleteUser( Long id ) {
 
@@ -165,13 +122,11 @@ public class UserService {
 
     public FilterOptionResponse getFilterOptions() {
 
-        List<Department> departments = List.of(Department.values());
-        List<EmployeeType> employeeTypes = List.of(EmployeeType.values());
-        List<Role> roles = List.of(Role.values());
-
-        List<BloodGroup>bloodGroups = List.of(BloodGroup.values());
-        List<Gender>genders = List.of(Gender.values());
-
-        return new FilterOptionResponse(departments, roles, employeeTypes, bloodGroups, genders);
+        List<Department> departments = List.of( Department.values() );
+        List<EmployeeType> employeeTypes = List.of( EmployeeType.values() );
+        List<Role> roles = List.of( Role.values() );
+        List<BloodGroup>bloodGroups = List.of( BloodGroup.values() );
+        List<Gender>genders = List.of( Gender.values() );
+        return new FilterOptionResponse( departments, roles, employeeTypes, bloodGroups, genders );
     }
 }

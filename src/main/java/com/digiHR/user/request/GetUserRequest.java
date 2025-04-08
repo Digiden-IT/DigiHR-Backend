@@ -9,5 +9,4 @@ public class GetUserRequest {
 
     private Boolean isActive;
     private Role role;
-
 }

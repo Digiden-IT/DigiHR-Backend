@@ -11,7 +11,7 @@ public enum BloodGroup {
     AB_POSITIVE( "AB+" ),
     AB_NEGATIVE( "AB-" );
 
-    final String bloodGroup;
+    private final String bloodGroup;
 
     BloodGroup( String bloodGroup ) {
         this.bloodGroup = bloodGroup;

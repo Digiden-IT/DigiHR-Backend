@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController()
@@ -29,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getUsers(GetUserRequest request, Pageable pageable ) {
+    public ResponseEntity<?> getUsers( GetUserRequest request, Pageable pageable ) {
         PaginatedApiResponse<List<UserResponse>> userResponses = userService.getUsers( request, pageable);
         return ResponseEntity.ok( userResponses );
     }
@@ -42,22 +41,19 @@ public class UserController {
 
     @PutMapping( "/{id}")
     public ResponseEntity<UserResponse> updateUser( @PathVariable Long id, @RequestBody AddUserRequest request ) {
-
-         UserResponse updatedUser = userService.updateUser( id, request );
-
+        UserResponse updatedUser = userService.updateUser( id, request );
         return ResponseEntity.ok( updatedUser );
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser( @PathVariable Long id ) {
         userService.deleteUser( id );
-        return ResponseEntity.ok("User deleted successfully");
+        return ResponseEntity.ok( "User deleted successfully" );
     }
 
     @GetMapping("/filter-options")
     public ResponseEntity<FilterOptionResponse> getFilterOptions() {
         FilterOptionResponse options = userService.getFilterOptions();
-        return ResponseEntity.ok(options);
+        return ResponseEntity.ok( options );
     }
-
 }

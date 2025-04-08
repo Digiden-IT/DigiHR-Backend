@@ -13,17 +13,23 @@ public class UserSpecification {
         if( isActive == null )
             return Specification.where( null );
 
-        return ( root, query, criteriaBuilder ) -> criteriaBuilder.equal( root.get( "isActive" ), isActive );
+        return ( root, query, criteriaBuilder ) ->
+
+                criteriaBuilder.equal( root.get( "isActive" ), isActive );
     }
 
     public static Specification<User> filterByIsDeletedNull() {
 
-        return ( root, query, criteriaBuilder ) -> criteriaBuilder.isNull( root.get( "isDeleted" ) );
+        return ( root, query, criteriaBuilder ) ->
+
+                criteriaBuilder.isNull( root.get( "isDeleted" ) );
     }
 
     public static Specification<User> filterByIsDeletedFalse() {
 
-        return ( root, query, criteriaBuilder ) -> criteriaBuilder.isFalse( root.get( "isDeleted" ) );
+        return ( root, query, criteriaBuilder ) ->
+
+                criteriaBuilder.isFalse( root.get( "isDeleted" ) );
     }
 
     public static Specification<User> filterByRoleIn( List<Role> roles ) {
@@ -31,6 +37,8 @@ public class UserSpecification {
         if( roles == null )
             return Specification.where( null );
 
-        return (root, query, criteriaBuilder) -> root.get( "role" ).in( roles );
+        return (root, query, criteriaBuilder) ->
+
+                root.get( "role" ).in( roles );
     }
 }
