@@ -4,7 +4,6 @@ import lombok.Getter;
 
 @Getter
 public enum Department {
-
     HR("Hr"),
     MARKETING("Marketing"),
     SALES("Sales"),
@@ -14,7 +13,6 @@ public enum Department {
     OTHER("other");
 
     private final String department;
-
     Department( String department ) {
         this.department = department;
     }

@@ -10,7 +10,6 @@ public enum EmployeeType {
     CONTRATUAL ( "Contratual" );
 
     private final String type;
-
     EmployeeType( String type ) {
         this.type = type;
     }

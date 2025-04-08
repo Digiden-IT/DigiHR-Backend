@@ -1,7 +1,6 @@
 package com.digiHR.user;
 
 public enum BloodGroup {
-
     A_POSITIVE( "A+" ),
     A_NEGATIVE( "A-" ),
     B_POSITIVE( "B+" ),

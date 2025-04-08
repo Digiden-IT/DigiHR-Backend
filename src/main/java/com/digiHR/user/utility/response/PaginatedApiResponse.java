@@ -9,7 +9,6 @@ public class PaginatedApiResponse<T>{
     private Integer totalPages;
     private Long totalElements;
     private T data;
-
     public PaginatedApiResponse(T data, Integer currentPage, Integer totalPages, Long totalElements ) {
         this.currentPage = currentPage;
         this.totalPages = totalPages;
