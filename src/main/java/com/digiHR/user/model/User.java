@@ -88,11 +88,7 @@ public class User extends AuditableEntity {
         this.address = addUserRequest.getAddress();
         this.employeeType = addUserRequest.getEmployeeType();
         this.dateOfJoining = addUserRequest.getDateOfJoining();
-        this.totalLeaves = Integer.valueOf(addUserRequest.getTotalLeaves());
         this.password = addUserRequest.getPassword();
-        this.isActive = addUserRequest.getIsActive() != null ? addUserRequest.getIsActive() : true;
-        this.role = addUserRequest.getRole();
-        this.refreshToken = addUserRequest.getRefreshToken();
     }
 
 }
