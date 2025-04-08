@@ -3,11 +3,16 @@ package com.digiHR.Announcement.controller;
 import com.digiHR.Announcement.model.Announcement;
 import com.digiHR.Announcement.request.AddAnnouncementRequest;
 import com.digiHR.Announcement.request.GetAnnouncementRequest;
+import com.digiHR.Announcement.request.UpdateAnnouncementRequest;
 import com.digiHR.Announcement.response.AnnouncementResponse;
+import com.digiHR.user.model.User;
+import com.digiHR.user.service.LoggedInUserService;
+import com.digiHR.utility.exceptions.NotFoundException;
 import com.digiHR.utility.response.PaginatedApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.digiHR.Announcement.service.AnnouncementService;
@@ -23,30 +28,32 @@ public class AnnouncementController {
     private final AnnouncementService announcementService;
 
     @GetMapping
-    public PaginatedApiResponse<List<AnnouncementResponse>> getAllAnnouncements(GetAnnouncementRequest request, Pageable pageable) {
-        return announcementService.getAllAnnouncements(request, pageable);
+    public PaginatedApiResponse<List<AnnouncementResponse>> getAllAnnouncements( GetAnnouncementRequest request, Pageable pageable ) {
+        return announcementService.getAllAnnouncements( request, pageable );
     }
 
     @PostMapping
-    public ResponseEntity<AnnouncementResponse> createAnnouncement(@RequestBody AddAnnouncementRequest request) {
+    public ResponseEntity<AnnouncementResponse> createAnnouncement( @RequestBody AddAnnouncementRequest request ) {
         AnnouncementResponse response =announcementService.createAnnouncement( request );
         return ResponseEntity.ok( response );
     }
 
-    @PutMapping
-    public ResponseEntity<Announcement> updateAnnouncement(@RequestBody Announcement announcement ) {
-        announcement= announcementService. updateAnnouncement( announcement );
-        return ResponseEntity.ok( announcement );
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<AnnouncementResponse> updateAnnouncement( @PathVariable Long id, @RequestBody UpdateAnnouncementRequest request ) {
+        AnnouncementResponse updatedAnnouncement = announcementService.updateAnnouncement( id, request );
+        return ResponseEntity.ok( updatedAnnouncement );
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteAnnouncement(@PathVariable long id) {
+    @DeleteMapping("/{id}" )
+    public ResponseEntity<String> deleteAnnouncement( @PathVariable Long id ) {
         try {
-            announcementService.deleteAnnouncement(id);
-            return ResponseEntity.ok("Announcement deleted successfully");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(404).body(e.getMessage());
+            announcementService.deleteAnnouncement( id );
+            return ResponseEntity.ok("Announcement deleted successfully" );
+        } catch ( NotFoundException e ) {
+            return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( e.getMessage() );
         }
     }
+
 
 }

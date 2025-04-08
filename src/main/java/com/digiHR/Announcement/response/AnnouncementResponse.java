@@ -14,7 +14,7 @@ public class AnnouncementResponse {
     private String authorName;
     private LocalDateTime announcementDate;
 
-    public AnnouncementResponse(Announcement announcement) {
+    public AnnouncementResponse( Announcement announcement ) {
         this.id = announcement.getId();
         this.title = announcement.getTitle();
         this.description = announcement.getDescription();

@@ -8,5 +8,6 @@ import java.util.Date;
 @Data
 public class GetAnnouncementRequest {
     private Long postedBy;
-    private LocalDateTime announcementDate;
+    private LocalDateTime announcementDateStart;
+    private LocalDateTime announcementDateEnd;
 }
