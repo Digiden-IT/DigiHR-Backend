@@ -4,7 +4,7 @@ import com.digiHR.holiday.request.AddHolidayRequest;
 import com.digiHR.holiday.request.GetHolidayRequest;
 import com.digiHR.holiday.response.HolidayResponse;
 import com.digiHR.holiday.service.HolidayService;
-import com.digiHR.user.utility.response.PaginatedApiResponse;
+import com.digiHR.utility.response.PaginatedApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +22,6 @@ public class HolidayController {
 
     @PostMapping
     public ResponseEntity<HolidayResponse> addHoliday( @RequestBody AddHolidayRequest request ) {
-
         HolidayResponse response = holidayService.addHoliday( request );
         return ResponseEntity.ok( response );
     }
@@ -37,6 +36,12 @@ public class HolidayController {
     public ResponseEntity<HolidayResponse> getHoliday( @PathVariable Long id ) {
         HolidayResponse holiday = holidayService.getHoliday( id );
         return ResponseEntity.ok( holiday );
+    }
+
+    @DeleteMapping( "/{id}" )
+    public ResponseEntity<String> deleteHoliday( @PathVariable Long id ) {
+        holidayService.deleteHoliday( id );
+        return ResponseEntity.ok( "Holiday deleted successfully" );
     }
 
 }

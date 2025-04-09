@@ -1,4 +1,4 @@
-package com.digiHR.user.utility.response;
+package com.digiHR.utility.response;
 
 import lombok.Data;
 

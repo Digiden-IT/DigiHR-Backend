@@ -5,24 +5,28 @@ import com.digiHR.holiday.repository.HolidayRepository;
 import com.digiHR.holiday.request.AddHolidayRequest;
 import com.digiHR.holiday.request.GetHolidayRequest;
 import com.digiHR.holiday.response.HolidayResponse;
-import com.digiHR.user.utility.exceptions.NotFoundException;
-import com.digiHR.user.utility.response.PaginatedApiResponse;
+import com.digiHR.utility.exceptions.NotFoundException;
+import com.digiHR.utility.response.PaginatedApiResponse;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Objects;
 
-import static com.digiHR.holiday.repository.HolidaySpecification.*;
+//import static com.digiHR.holiday.repository.HolidaySpecification.*;
 @Service
 @RequiredArgsConstructor( onConstructor_ = {@Autowired} )
 public class HolidayService {
 
     private final HolidayRepository holidayRepository;
+    @PersistenceContext
+    private final EntityManager entityManager;
 
     public HolidayResponse addHoliday( AddHolidayRequest addHolidayRequest ) {
 
@@ -42,8 +46,8 @@ public class HolidayService {
 
     public PaginatedApiResponse<List<HolidayResponse>> getHolidays( GetHolidayRequest request, Pageable pageable ) {
 
-        Specification<Holiday> holidaySpecification = getHolidaySpecification ( request );
-        Page<Holiday> holidayPage = holidayRepository.findAll( holidaySpecification, pageable);
+//        Specification<Holiday> holidaySpecification = getHolidaySpecification ( request );
+        Page<Holiday> holidayPage = holidayRepository.findAll( pageable);
 
         List<HolidayResponse> holidayResponseList = holidayPage.stream()
                 .map(HolidayResponse ::new)
@@ -57,11 +61,14 @@ public class HolidayService {
         );
     }
 
-    private Specification<Holiday> getHolidaySpecification ( GetHolidayRequest request ) {
-        return Specification.where( filterByHolidayName(request.getHolidayName() )
-                .and( filterByDate( request.getDate()  ) ) );
+//    private Specification<Holiday> getHolidaySpecification ( GetHolidayRequest request ) {
+//        return Specification.where( filterByHolidayName(request.getHolidayName() )
+//                .and( filterByDate( request.getDate()  ) ) );
+//    }
+
+    @Transactional
+    public void deleteHoliday( Long id ) {
+       holidayRepository.deleteById( id );
     }
-
-
 
 }

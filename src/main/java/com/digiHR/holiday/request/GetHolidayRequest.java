@@ -7,6 +7,6 @@ import java.time.LocalDate;
 @Data
 public class GetHolidayRequest {
 
-        private String holidayName;
-        private LocalDate date;
+//        private String holidayName;
+//        private LocalDate date;
 }
