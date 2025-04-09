@@ -17,10 +17,13 @@ spring:
 
 server:
   port: 8080
+  servlet:
+    context-path: /api/v1
 
 logging:
   level:
     root: INFO
+    org.springframework.security: DEBUG
     com.yourpackage: DEBUG
   file:
     path: logs/application.log
@@ -28,6 +31,12 @@ logging:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
 jwt:
-  secret: "its-user-db-config-secret"
-  expiration: 86400
-  refresh-token-expiration: 864000
+  secret: "NMAFXibzdw1VMa52BXpMfEY5zxoA1pKUZN0jzSYKEkkNMAFXibzdw1VMa52BXpMfEY5zxoA1pKUZN0jzSYKEkk"
+  expiration: 86400000
+  refresh-token-expiration: 864000000
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    path: /digihr-api-docs

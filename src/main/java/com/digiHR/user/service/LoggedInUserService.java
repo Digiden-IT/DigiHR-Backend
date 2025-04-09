@@ -21,24 +21,20 @@ public class LoggedInUserService {
     @PersistenceContext
     private EntityManager entityManager;
 
-
     private static Long extractId( Authentication authentication ) {
-
         if ( authentication == null ) {
 
             return null;
         }
         else if ( authentication.getPrincipal() instanceof UserDetails) {
 
-            CustomUserDetails springSecurityUser = (CustomUserDetails) authentication.getPrincipal();
+            CustomUserDetails springSecurityUser = ( CustomUserDetails ) authentication.getPrincipal();
             return springSecurityUser.getId();
         }
-
         return null;
     }
 
     public Authentication getAuthentication(){
-
         SecurityContext securityContext = SecurityContextHolder.getContext();
         return securityContext.getAuthentication();
     }
@@ -49,13 +45,11 @@ public class LoggedInUserService {
 
     @Transactional( propagation = Propagation.REQUIRED )
     public User getLoginUser() {
-
         return entityManager.getReference( User.class, getCurrentUserId() );
     }
 
     @Transactional( propagation = Propagation.REQUIRED, readOnly = true )
     public User getLoginUserForReadOnly() {
-
         return entityManager.getReference( User.class, getCurrentUserId() );
     }
 }
