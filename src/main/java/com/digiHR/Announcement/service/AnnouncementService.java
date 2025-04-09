@@ -2,7 +2,6 @@ package com.digiHR.Announcement.service;
 
 import com.digiHR.Announcement.model.Announcement;
 import com.digiHR.Announcement.repository.AnnouncementRepository;
-import com.digiHR.Announcement.repository.AnnouncementSpecification;
 import com.digiHR.Announcement.request.AddAnnouncementRequest;
 import com.digiHR.Announcement.request.GetAnnouncementRequest;
 import com.digiHR.Announcement.request.UpdateAnnouncementRequest;
@@ -16,13 +15,14 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+
+import static com.digiHR.Announcement.repository.AnnouncementSpecification.filterByAnnouncementDateRange;
+import static com.digiHR.Announcement.repository.AnnouncementSpecification.filterByAuthor;
 
 @Service
 @RequiredArgsConstructor( onConstructor_ = @Autowired)
@@ -36,10 +36,8 @@ public class AnnouncementService {
 
     public PaginatedApiResponse<List<AnnouncementResponse>> getAllAnnouncements( GetAnnouncementRequest request, Pageable pageable ) {
 
-        Specification<Announcement> announcementSpecification = buildAnnouncementSpecification( request );
-
+        Specification<Announcement> announcementSpecification = getAnnouncementSpecification( request );
         Page<Announcement> announcementPage = announcementRepository.findAll( announcementSpecification, pageable );
-
         List<AnnouncementResponse> announcementResponses = announcementPage.stream()
                 .map( AnnouncementResponse::new )
                 .toList();
@@ -48,19 +46,9 @@ public class AnnouncementService {
                 announcementPage.getTotalPages(), announcementPage.getTotalElements() );
     }
 
-    private Specification<Announcement> buildAnnouncementSpecification( GetAnnouncementRequest request ) {
-        Specification<Announcement> announcementSpecification = Specification.where(null );
-
-        if ( request.getPostedBy() != null ) {
-            announcementSpecification = announcementSpecification.and( AnnouncementSpecification.filterByPostedBy( request.getPostedBy() ));
-        }
-
-        if ( request.getAnnouncementDateStart() != null && request.getAnnouncementDateEnd() != null ) {
-            announcementSpecification = announcementSpecification.and(AnnouncementSpecification.filterByAnnouncementDateRange(request.getAnnouncementDateStart(), request.getAnnouncementDateEnd()));
-        }
-
-
-        return announcementSpecification;
+    private Specification<Announcement> getAnnouncementSpecification( GetAnnouncementRequest request ) {
+        return filterByAuthor( request.getPostedBy() )
+                .and( filterByAnnouncementDateRange( request.getAnnouncementDateStart(), request.getAnnouncementDateEnd() ) );
     }
 
 
@@ -73,31 +61,26 @@ public class AnnouncementService {
     }
 
 
-public AnnouncementResponse createAnnouncement( AddAnnouncementRequest request ) {
+    public AnnouncementResponse createAnnouncement( AddAnnouncementRequest request ) {
 
-    User user = loggedInUserService.getLoginUser();
+        User user = loggedInUserService.getLoginUser();
+        Announcement announcement = new Announcement( request, user );
+        announcement = announcementRepository.save( announcement );
 
-    Announcement announcement = new Announcement( request, user );
-    announcement = announcementRepository.save( announcement );
-
-    return new AnnouncementResponse( announcement );
-}
-
-@Transactional
-public AnnouncementResponse updateAnnouncement( Long id, UpdateAnnouncementRequest request ) {
-    Announcement announcement = entityManager.getReference( Announcement.class, id );
-
-    if ( request.getTitle() != null ) {
-        announcement.setTitle( request.getTitle() );
+        return new AnnouncementResponse( announcement );
     }
 
-    if ( request.getDescription() != null ) {
-        announcement.setDescription( request.getDescription() );
+    @Transactional
+    public AnnouncementResponse updateAnnouncement( Long id, UpdateAnnouncementRequest request ) {
+        Announcement announcement = entityManager.getReference( Announcement.class, id );
+
+        if ( request.getTitle() != null )
+            announcement.setTitle( request.getTitle() );
+
+        if ( request.getDescription() != null )
+            announcement.setDescription( request.getDescription() );
+
+        Announcement updatedAnnouncement = announcementRepository.save( announcement );
+        return new AnnouncementResponse( updatedAnnouncement );
     }
-    Announcement updatedAnnouncement = announcementRepository.save( announcement );
-    return new AnnouncementResponse( updatedAnnouncement );
-}
-
-
-
 }

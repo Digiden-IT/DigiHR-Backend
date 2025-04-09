@@ -1,18 +1,13 @@
 package com.digiHR.Announcement.controller;
 
-import com.digiHR.Announcement.model.Announcement;
 import com.digiHR.Announcement.request.AddAnnouncementRequest;
 import com.digiHR.Announcement.request.GetAnnouncementRequest;
 import com.digiHR.Announcement.request.UpdateAnnouncementRequest;
 import com.digiHR.Announcement.response.AnnouncementResponse;
-import com.digiHR.user.model.User;
-import com.digiHR.user.service.LoggedInUserService;
-import com.digiHR.utility.exceptions.NotFoundException;
 import com.digiHR.utility.response.PaginatedApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.digiHR.Announcement.service.AnnouncementService;
@@ -22,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor( onConstructor_ = @Autowired )
-@RequestMapping("/announcements")
+@RequestMapping( "/announcements" )
 public class AnnouncementController {
 
     private final AnnouncementService announcementService;
@@ -39,20 +34,16 @@ public class AnnouncementController {
     }
 
 
-    @PatchMapping("/{id}")
+    @PatchMapping( "/{id}" )
     public ResponseEntity<AnnouncementResponse> updateAnnouncement( @PathVariable Long id, @RequestBody UpdateAnnouncementRequest request ) {
         AnnouncementResponse updatedAnnouncement = announcementService.updateAnnouncement( id, request );
         return ResponseEntity.ok( updatedAnnouncement );
     }
 
-    @DeleteMapping("/{id}" )
+    @DeleteMapping( "/{id}" )
     public ResponseEntity<String> deleteAnnouncement( @PathVariable Long id ) {
-        try {
-            announcementService.deleteAnnouncement( id );
-            return ResponseEntity.ok("Announcement deleted successfully" );
-        } catch ( NotFoundException e ) {
-            return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( e.getMessage() );
-        }
+        announcementService.deleteAnnouncement( id );
+        return ResponseEntity.ok( "Announcement deleted successfully" );
     }
 
 

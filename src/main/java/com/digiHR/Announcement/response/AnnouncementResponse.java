@@ -2,9 +2,7 @@ package com.digiHR.Announcement.response;
 
 import com.digiHR.Announcement.model.Announcement;
 import lombok.Data;
-
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 public class AnnouncementResponse {
@@ -19,8 +17,7 @@ public class AnnouncementResponse {
         this.title = announcement.getTitle();
         this.description = announcement.getDescription();
         this.announcementDate = announcement.getAnnouncementDate();
-        this.authorName = announcement.getPostedBy() != null
-                ? announcement.getPostedBy().getName() : null;
+        this.authorName = (announcement.getPostedBy() != null) ? announcement.getPostedBy().getName() : null;
     }
 
 }
