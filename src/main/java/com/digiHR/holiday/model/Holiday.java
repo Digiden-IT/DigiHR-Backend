@@ -1,6 +1,7 @@
 package com.digiHR.holiday.model;
 
 
+import com.digiHR.holiday.request.AddHolidayRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,5 +26,8 @@ public class Holiday {
     @Column(name = "date", nullable = false, unique = true)
     private LocalDate date;
 
-
+    public Holiday(AddHolidayRequest addHolidayRequest) {
+        this.holidayName = addHolidayRequest.getHolidayName();
+        this.date = addHolidayRequest.getDate();
+    }
 }
