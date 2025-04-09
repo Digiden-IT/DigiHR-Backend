@@ -5,7 +5,7 @@ import com.digiHR.user.request.GetUserRequest;
 import com.digiHR.user.response.FilterOptionResponse;
 import com.digiHR.user.response.UserResponse;
 import com.digiHR.user.service.UserService;
-import com.digiHR.user.utility.response.PaginatedApiResponse;
+import com.digiHR.utility.response.PaginatedApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
