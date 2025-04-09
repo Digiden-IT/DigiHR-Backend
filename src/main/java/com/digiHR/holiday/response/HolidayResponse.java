@@ -10,7 +10,6 @@ public class HolidayResponse {
     private Long id;
     private String holidayName;
     private LocalDate date;
-
     public HolidayResponse(Holiday holiday) {
         this.id = holiday.getId();
         this.holidayName = holiday.getHolidayName();

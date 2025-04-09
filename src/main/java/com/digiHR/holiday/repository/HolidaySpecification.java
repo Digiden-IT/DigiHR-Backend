@@ -7,15 +7,11 @@ import java.time.LocalDate;
 
 public class HolidaySpecification {
 
-    public static Specification<Holiday> filterByHolidayName(String holidayName) {
-        return (root, query, cb) -> (holidayName == null || holidayName.isEmpty()) ? null :
-                cb.like(cb.lower(root.get("holidayName")), "%" + holidayName.toLowerCase() + "%");
+
+    public static Specification<Holiday> filterByHolidayDateRange( LocalDate startDate, LocalDate endDate ) {
+        if ( startDate == null || endDate == null )
+            return Specification.where(null );
+
+        return (root, query, criteriaBuilder ) -> criteriaBuilder.between( root.get( "date" ), startDate, endDate );
     }
-
-    public static Specification<Holiday> filterByDate(LocalDate date) {
-        return (root, query, cb) -> (date == null) ? null :
-                cb.equal(root.get("date"), date);
-    }
-
-
 }

@@ -19,4 +19,5 @@ public class AnnouncementSpecification {
 
         return (root, query, criteriaBuilder ) -> criteriaBuilder.between( root.get( "announcementDate" ), startDate, endDate );
     }
+
 }
