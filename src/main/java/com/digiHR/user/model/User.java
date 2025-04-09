@@ -2,7 +2,7 @@ package com.digiHR.user.model;
 
 import com.digiHR.user.*;
 import com.digiHR.user.request.AddUserRequest;
-import com.digiHR.user.utility.audit.AuditableEntity;
+import com.digiHR.utility.audit.AuditableEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

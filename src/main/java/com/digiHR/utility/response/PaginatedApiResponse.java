@@ -1,4 +1,4 @@
-package com.digiHR.user.utility.response;
+package com.digiHR.utility.response;
 
 import lombok.Data;
 
@@ -10,7 +10,7 @@ public class PaginatedApiResponse<T>{
     private Long totalElements;
     private T data;
 
-    public PaginatedApiResponse( T data, Integer currentPage, Integer totalPages, Long totalElements ) {
+    public PaginatedApiResponse(T data, Integer currentPage, Integer totalPages, Long totalElements ) {
         this.currentPage = currentPage;
         this.totalPages = totalPages;
         this.totalElements = totalElements;
