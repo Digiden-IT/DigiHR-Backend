@@ -1,4 +1,4 @@
-package com.digiHR.Announcement.request;
+package com.digiHR.announcement.request;
 
 import lombok.Data;
 import java.time.LocalDateTime;

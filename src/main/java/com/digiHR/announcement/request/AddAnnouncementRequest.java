@@ -1,10 +1,9 @@
-package com.digiHR.Announcement.request;
+package com.digiHR.announcement.request;
 
 import lombok.Data;
 
 @Data
-public class UpdateAnnouncementRequest {
+public class AddAnnouncementRequest {
     private String title;
     private String description;
-
 }
