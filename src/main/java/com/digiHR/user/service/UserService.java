@@ -63,7 +63,7 @@ public class UserService {
         Page<User> userPage = userRepository.findAll( userSpecification, pageable );
 
         List<UserResponse> userResponseList = userPage.stream()
-                .map(UserResponse::new)
+                .map( UserResponse::new )
                 .toList();
 
         return new PaginatedApiResponse<>(
