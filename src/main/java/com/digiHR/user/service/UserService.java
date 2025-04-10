@@ -78,9 +78,10 @@ public class UserService {
 
         return filterByIsActive( request.getIsActive() )
                 .and( filterByIsDeletedNull().or( filterByIsDeletedFalse() ) )
-                .and( filterByRoleIn( List.of( request.getRole() ) ) );
+                .and( filterByRoleIn( request.getRole() == null ? null : List.of( request.getRole() ) ) );
     }
 
+    @Transactional
     public UserResponse updateUser( Long id, AddUserRequest request ) {
 
         User user = entityManager.getReference( User.class, id );

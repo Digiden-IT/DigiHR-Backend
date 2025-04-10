@@ -18,5 +18,4 @@ public class AddUserRequest {
     private EmployeeType employeeType;
     private String dateOfJoining;
     private Role role;
-
 }
