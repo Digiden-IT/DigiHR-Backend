@@ -1,6 +1,6 @@
-package com.digiHR.Announcement.model;
+package com.digiHR.announcement.model;
 
-import com.digiHR.Announcement.request.AddAnnouncementRequest;
+import com.digiHR.announcement.request.AddAnnouncementRequest;
 import com.digiHR.user.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

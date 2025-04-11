@@ -1,11 +1,11 @@
-package com.digiHR.Announcement.service;
+package com.digiHR.announcement.service;
 
-import com.digiHR.Announcement.model.Announcement;
-import com.digiHR.Announcement.repository.AnnouncementRepository;
-import com.digiHR.Announcement.request.AddAnnouncementRequest;
-import com.digiHR.Announcement.request.GetAnnouncementRequest;
-import com.digiHR.Announcement.request.UpdateAnnouncementRequest;
-import com.digiHR.Announcement.response.AnnouncementResponse;
+import com.digiHR.announcement.model.Announcement;
+import com.digiHR.announcement.repository.AnnouncementRepository;
+import com.digiHR.announcement.request.AddAnnouncementRequest;
+import com.digiHR.announcement.request.GetAnnouncementRequest;
+import com.digiHR.announcement.request.UpdateAnnouncementRequest;
+import com.digiHR.announcement.response.AnnouncementResponse;
 import com.digiHR.user.model.User;
 import com.digiHR.user.service.LoggedInUserService;
 import com.digiHR.utility.exceptions.NotFoundException;
@@ -21,8 +21,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-import static com.digiHR.Announcement.repository.AnnouncementSpecification.filterByAnnouncementDateRange;
-import static com.digiHR.Announcement.repository.AnnouncementSpecification.filterByAuthor;
+import static com.digiHR.announcement.repository.AnnouncementSpecification.filterByAnnouncementDateRange;
+import static com.digiHR.announcement.repository.AnnouncementSpecification.filterByAuthor;
 
 @Service
 @RequiredArgsConstructor( onConstructor_ = @Autowired)
