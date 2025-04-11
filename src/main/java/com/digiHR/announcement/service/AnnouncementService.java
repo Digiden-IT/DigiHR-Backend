@@ -55,7 +55,7 @@ public class AnnouncementService {
     @Transactional
     public void deleteAnnouncement( Long id ) {
         if ( !announcementRepository.existsById( id ) ) {
-            throw new NotFoundException( "announcement", id );
+            throw new NotFoundException( "Announcement", id );
         }
         announcementRepository.deleteById( id );
     }
