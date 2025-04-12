@@ -2,6 +2,7 @@ package com.digiHR.holiday.model;
 
 
 import com.digiHR.holiday.request.AddHolidayRequest;
+import com.digiHR.utility.audit.AuditableEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,20 +11,20 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "holidays")
+@Table( name = "holidays" )
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Holiday {
+public class Holiday extends AuditableEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     private Long id;
 
-    @Column(name = "holiday_name", nullable = false)
+    @Column( name = "holiday_name", nullable = false )
     private String holidayName;
 
-    @Column(name = "date", nullable = false, unique = true)
+    @Column( name = "date", nullable = false )
     private LocalDate date;
 
     public Holiday(AddHolidayRequest addHolidayRequest) {

@@ -32,7 +32,7 @@ public class HolidayController {
         return ResponseEntity.ok( holidayResponses );
     }
 
-    @GetMapping( "/{id}")
+    @GetMapping( "/{id}" )
     public ResponseEntity<HolidayResponse> getHoliday( @PathVariable Long id ) {
         HolidayResponse holiday = holidayService.getHoliday( id );
         return ResponseEntity.ok( holiday );

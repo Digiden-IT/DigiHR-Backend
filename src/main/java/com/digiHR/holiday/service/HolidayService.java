@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Objects;
 import static com.digiHR.holiday.repository.HolidaySpecification.*;
 
-
 @Service
 @RequiredArgsConstructor( onConstructor_ = {@Autowired} )
 public class HolidayService {
@@ -59,12 +58,15 @@ public class HolidayService {
     }
 
     private Specification<Holiday> getHolidaySpecification ( GetHolidayRequest request ) {
-        return filterByHolidayDateRange( request.getHolidayDateStart(), request.getHolidayDateEnd() ) ;
+        return filterByHolidayDateRange( request.getHolidayDateStart(), request.getHolidayDateEnd() )
+                .and(filterByIsUpcoming(request.getIsUpcoming() ) );
     }
 
     @Transactional
-    public void deleteHoliday( Long id ) {
-       holidayRepository.deleteById( id );
-    }
+    public void deleteHoliday(Long id) {
+        Holiday holiday = holidayRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Holiday", id));
 
+        holidayRepository.delete(holiday);
+    }
 }

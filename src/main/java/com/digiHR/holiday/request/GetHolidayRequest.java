@@ -8,4 +8,5 @@ public class GetHolidayRequest {
 
     private LocalDate holidayDateStart;
     private LocalDate holidayDateEnd;
+    private Boolean isUpcoming;
 }
