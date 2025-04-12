@@ -1,8 +1,7 @@
 package com.digiHR.leave.model;
 
-import com.digiHR.leave.Status;
+import com.digiHR.leave.RequestStatus;
 import com.digiHR.leave.request.AddLeaveRequest;
-import com.digiHR.user.Role;
 import com.digiHR.user.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -37,7 +36,7 @@ public class Leave {
 
     @Enumerated( EnumType.STRING )
     @Column( name = "status" )
-    private Status status;
+    private RequestStatus requestStatus;
 
     public Leave( AddLeaveRequest request, User employee ) {
         this.employee = employee;

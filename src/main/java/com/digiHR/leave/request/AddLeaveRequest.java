@@ -1,6 +1,5 @@
 package com.digiHR.leave.request;
 
-import com.digiHR.leave.Status;
 import lombok.Data;
 
 import java.time.LocalDate;

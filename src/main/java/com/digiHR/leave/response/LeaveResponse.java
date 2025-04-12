@@ -1,6 +1,6 @@
 package com.digiHR.leave.response;
 
-import com.digiHR.leave.Status;
+import com.digiHR.leave.RequestStatus;
 import com.digiHR.leave.model.Leave;
 import lombok.Data;
 
@@ -13,14 +13,14 @@ public class LeaveResponse {
    private LocalDate startDate;
    private LocalDate endDate;
    private String reason;
-   private Status status;
+   private RequestStatus requestStatus;
 
    public LeaveResponse( Leave leave ) {
        this.id=leave.getId();
-       this.employeeName=leave.getEmployee().getName();
+       this.employeeName = (leave.getEmployee() != null) ? leave.getEmployee().getName() : null;
        this.startDate=leave.getStartDate();
        this.endDate=leave.getEndDate();
        this.reason=leave.getReason();
-       this.status=leave.getStatus();
+       this.requestStatus = (leave.getRequestStatus() != null) ? leave.getRequestStatus(): null;
    }
 }
