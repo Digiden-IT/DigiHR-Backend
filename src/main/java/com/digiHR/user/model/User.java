@@ -77,6 +77,7 @@ public class User extends AuditableEntity {
         this.name = addUserRequest.getName();
         this.email = addUserRequest.getEmail();
         this.phoneNumber = addUserRequest.getPhoneNumber();
+        this.role = addUserRequest.getRole();
         this.dateOfBirth = addUserRequest.getDateOfBirth();
         this.designation = addUserRequest.getDesignation();
         this.department = addUserRequest.getDepartment();

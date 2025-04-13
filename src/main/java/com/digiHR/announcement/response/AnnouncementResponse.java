@@ -1,6 +1,6 @@
-package com.digiHR.Announcement.response;
+package com.digiHR.announcement.response;
 
-import com.digiHR.Announcement.model.Announcement;
+import com.digiHR.announcement.model.Announcement;
 import lombok.Data;
 import java.time.LocalDateTime;
 

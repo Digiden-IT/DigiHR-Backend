@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class UserController {
         return ResponseEntity.ok( response );
     }
 
+    @PreAuthorize( "hasAuthority( 'Admin' )" )
     @GetMapping
     public ResponseEntity<?> getUsers( GetUserRequest request, Pageable pageable ) {
         PaginatedApiResponse<List<UserResponse>> userResponses = userService.getUsers( request, pageable);
@@ -45,12 +47,14 @@ public class UserController {
         return ResponseEntity.ok( updatedUser );
     }
 
+    @PreAuthorize( "hasAuthority( 'Admin' )" )
     @DeleteMapping( "/{id}" )
     public ResponseEntity<String> deleteUser( @PathVariable Long id ) {
         userService.deleteUser( id );
         return ResponseEntity.ok( "User deleted successfully" );
     }
 
+    @PreAuthorize( "hasAuthority( 'Admin' )" )
     @GetMapping( "/filter-options" )
     public ResponseEntity<FilterOptionResponse> getFilterOptions() {
         FilterOptionResponse options = userService.getFilterOptions();

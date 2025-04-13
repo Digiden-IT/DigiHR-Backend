@@ -1,6 +1,6 @@
-package com.digiHR.Announcement.repository;
+package com.digiHR.announcement.repository;
 
-import com.digiHR.Announcement.model.Announcement;
+import com.digiHR.announcement.model.Announcement;
 import org.springframework.data.jpa.domain.Specification;
 import java.time.LocalDateTime;
 
