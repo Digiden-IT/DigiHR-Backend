@@ -63,7 +63,7 @@ public class UserService {
         Page<User> userPage = userRepository.findAll( userSpecification, pageable );
 
         List<UserResponse> userResponseList = userPage.stream()
-                .map( UserResponse::new )
+                .map( this::getUserResponse )
                 .toList();
 
         return new PaginatedApiResponse<>(
@@ -72,6 +72,18 @@ public class UserService {
                 userPage.getTotalPages(),
                 userPage.getTotalElements()
         );
+    }
+
+    public UserResponse getUserResponse( User user ) {
+
+        UserResponse userResponse = new UserResponse( user );
+        userResponse.setId( user.getId() );
+        userResponse.setName( user.getName() );
+        userResponse.setDepartment( user.getDepartment() );
+        userResponse.setEmail( user.getEmail() );
+        userResponse.setRole( user.getRole() );
+        userResponse.setDateOfJoining( user.getDateOfJoining() );
+        return userResponse;
     }
 
     private Specification<User> getUserSpecification( GetUserRequest request ) {
