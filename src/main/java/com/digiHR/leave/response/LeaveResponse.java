@@ -3,7 +3,6 @@ package com.digiHR.leave.response;
 import com.digiHR.leave.RequestStatus;
 import com.digiHR.leave.model.Leave;
 import lombok.Data;
-
 import java.time.LocalDate;
 
 @Data

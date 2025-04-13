@@ -87,7 +87,7 @@ public class LeaveService {
         return new FilterOptionResponse( departments, leaveReason, requestStatus );
     }
 
-    public UserLeaveSummaryResponse getLeaveSummaryForUser() {
+    /*public UserLeaveSummaryResponse getLeaveSummaryForUser() {
         User user = loggedInUserService.getLoginUser();
         int totalLeave = leaveCountSettingRepository.findByUser( user )
                 .map( LeaveCountSetting::getTotalLeave )
@@ -106,5 +106,5 @@ public class LeaveService {
         int availableLeave = totalLeave - usedLeave - pendingLeave;
 
         return new UserLeaveSummaryResponse( usedLeave, pendingLeave, availableLeave );
-    }
+    }*/
 }

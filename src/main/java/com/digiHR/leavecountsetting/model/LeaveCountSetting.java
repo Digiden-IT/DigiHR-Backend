@@ -17,10 +17,6 @@ public class LeaveCountSetting {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn( name = "userId" )
-    private User user;
-
     @Column( name = "totalLeave" )
-    private int totalLeave;
+    private String totalLeave;
 }

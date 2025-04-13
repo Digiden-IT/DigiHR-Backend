@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequiredArgsConstructor( onConstructor_ = @Autowired)
+@RequiredArgsConstructor( onConstructor_ = @Autowired )
 @RequestMapping( "/leavecountsetting" )
 
 public class LeaveCountSettingController {

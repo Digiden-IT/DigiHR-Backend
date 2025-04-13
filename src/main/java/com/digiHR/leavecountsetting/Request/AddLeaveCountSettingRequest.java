@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class AddLeaveCountSettingRequest {
-    private int totalLeave;
+    private String totalLeave;
 }
