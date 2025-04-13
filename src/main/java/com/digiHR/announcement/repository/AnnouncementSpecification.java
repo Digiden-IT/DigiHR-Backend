@@ -17,6 +17,6 @@ public class AnnouncementSpecification {
         if ( startDate == null || endDate == null )
             return Specification.where(null );
 
-        return (root, query, criteriaBuilder ) -> criteriaBuilder.between( root.get( "announcementDate" ), startDate, endDate );
+        return ( root, query, criteriaBuilder ) -> criteriaBuilder.between( root.get( "announcementDate" ), startDate, endDate );
     }
 }
