@@ -8,6 +8,7 @@ import com.digiHR.user.request.GetUserRequest;
 import com.digiHR.user.response.FilterOptionResponse;
 import com.digiHR.user.response.UserResponse;
 import com.digiHR.utility.exceptions.NotFoundException;
+import com.digiHR.utility.response.EnumResponse;
 import com.digiHR.utility.response.PaginatedApiResponse;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -21,8 +22,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 import static com.digiHR.user.repository.UserSpecification.*;
@@ -76,7 +79,7 @@ public class UserService {
 
     public UserResponse getUserResponse( User user ) {
 
-        UserResponse userResponse = new UserResponse( user );
+        UserResponse userResponse = new UserResponse();
         userResponse.setId( user.getId() );
         userResponse.setName( user.getName() );
         userResponse.setDepartment( user.getDepartment() );
@@ -135,11 +138,26 @@ public class UserService {
 
     public FilterOptionResponse getFilterOptions() {
 
-        List<Department> departments = List.of( Department.values() );
-        List<EmployeeType> employeeTypes = List.of( EmployeeType.values() );
-        List<Role> roles = List.of( Role.values() );
-        List<BloodGroup>bloodGroups = List.of( BloodGroup.values() );
-        List<Gender>genders = List.of( Gender.values() );
+        List<EnumResponse> departments = Arrays.stream( Department.values() )
+                .map( department -> new EnumResponse( department.getvalue(), department.toString() ) )
+                .collect( Collectors.toList() );
+
+        List<EnumResponse> employeeTypes = Arrays.stream( EmployeeType.values() )
+                .map( employeeType -> new EnumResponse( employeeType.getvalue(), employeeType.toString() ) )
+                .collect( Collectors.toList() );
+
+        List<EnumResponse> roles = Arrays.stream( Role.values() )
+                .map( role -> new EnumResponse( role.getvalue(), role.toString() ) )
+                .collect( Collectors.toList() );
+
+        List<EnumResponse>bloodGroups = Arrays.stream( BloodGroup.values() )
+                .map( bloodGroup -> new EnumResponse( bloodGroup.getvalue(), bloodGroup.toString() ) )
+                .collect( Collectors.toList() );
+
+        List<EnumResponse>genders = Arrays.stream( Gender.values() )
+                .map( gender -> new EnumResponse( gender.getvalue(), gender.toString() ) )
+                .collect( Collectors.toList() );
+
         return new FilterOptionResponse( departments, roles, employeeTypes, bloodGroups, genders );
     }
 }

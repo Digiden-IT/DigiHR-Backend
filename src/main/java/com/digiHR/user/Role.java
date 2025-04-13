@@ -7,9 +7,12 @@ public enum Role {
     ADMIN( "Admin" ),
     USER( "User" );
 
-    private final String name;
+    private final String role;
 
-    Role( String name ) {
-        this.name = name;
+    public String getvalue(){
+        return role;
+    }
+    Role( String role ) {
+        this.role = role;
     }
 }
