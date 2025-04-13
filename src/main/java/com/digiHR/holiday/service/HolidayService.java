@@ -46,7 +46,7 @@ public class HolidayService {
         Page<Holiday> holidayPage = holidayRepository.findAll( holidaySpecification, pageable);
 
         List<HolidayResponse> holidayResponseList = holidayPage.stream()
-                .map(HolidayResponse ::new)
+                .map( HolidayResponse ::new )
                 .toList();
 
         return new PaginatedApiResponse<>(
@@ -59,14 +59,13 @@ public class HolidayService {
 
     private Specification<Holiday> getHolidaySpecification ( GetHolidayRequest request ) {
         return filterByHolidayDateRange( request.getHolidayDateStart(), request.getHolidayDateEnd() )
-                .and(filterByIsUpcoming(request.getIsUpcoming() ) );
+                .and( filterByIsUpcoming( request.getIsUpcoming() ) );
     }
 
     @Transactional
-    public void deleteHoliday(Long id) {
-        Holiday holiday = holidayRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Holiday", id));
-
-        holidayRepository.delete(holiday);
+    public void deleteHoliday( Long id ) {
+        Holiday holiday = holidayRepository.findById( id )
+                .orElseThrow( () -> new NotFoundException( "Holiday", id ) );
+        holidayRepository.delete( holiday );
     }
 }

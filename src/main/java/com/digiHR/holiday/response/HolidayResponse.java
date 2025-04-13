@@ -13,11 +13,12 @@ public class HolidayResponse {
     private String holidayName;
     private LocalDate date;
     private String dayOfWeek;
+
     public HolidayResponse( Holiday holiday ) {
         this.id = holiday.getId();
         this.holidayName = holiday.getHolidayName();
         this.date = holiday.getDate();
         this.dayOfWeek = holiday.getDate().getDayOfWeek()
-                .getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+                .getDisplayName( TextStyle.FULL, Locale.ENGLISH );
     }
 }

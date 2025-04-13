@@ -13,14 +13,14 @@ public class HolidaySpecification {
         return ( root, query, criteriaBuilder ) -> criteriaBuilder.between( root.get( "date" ), startDate, endDate );
     }
 
-    public static Specification<Holiday> filterByIsUpcoming(Boolean isUpcoming) {
-        if (isUpcoming == null)
-            return Specification.where(null);
+    public static Specification<Holiday> filterByIsUpcoming( Boolean isUpcoming ) {
+        if ( isUpcoming == null )
+            return Specification.where( null );
 
         LocalDate today = LocalDate.now();
-        return (root, query, criteriaBuilder) -> isUpcoming
-                ? criteriaBuilder.greaterThanOrEqualTo(root.get("date"), today)
-                : criteriaBuilder.lessThan(root.get("date"), today);
+        return ( root, query, criteriaBuilder ) -> isUpcoming
+                ? criteriaBuilder.greaterThanOrEqualTo( root.get( "date" ), today )
+                : criteriaBuilder.lessThan( root.get( "date" ), today );
     }
 
 }

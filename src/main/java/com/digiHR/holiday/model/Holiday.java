@@ -27,7 +27,7 @@ public class Holiday extends AuditableEntity {
     @Column( name = "date", nullable = false )
     private LocalDate date;
 
-    public Holiday(AddHolidayRequest addHolidayRequest) {
+    public Holiday( AddHolidayRequest addHolidayRequest ) {
         this.holidayName = addHolidayRequest.getHolidayName();
         this.date = addHolidayRequest.getDate();
     }

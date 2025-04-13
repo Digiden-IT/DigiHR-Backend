@@ -43,5 +43,4 @@ public class HolidayController {
         holidayService.deleteHoliday( id );
         return ResponseEntity.ok( "Holiday deleted successfully" );
     }
-
 }
