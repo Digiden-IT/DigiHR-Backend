@@ -40,12 +40,14 @@ public class JwtUtil {
 
         Map<String, Object> claims = new HashMap<>();
         claims.put( "email", customUserDetails.getUser().getEmail() );
+        claims.put( "role", customUserDetails.getUser().getRole() );
+        claims.put( "name", customUserDetails.getUser().getName() );
+        claims.put( "id", customUserDetails.getUser().getId() );
 
         return Jwts.builder()
                 .claims( claims )
                 .issuedAt( now )
                 .expiration( expiryDate )
-                .compressWith( Jwts.ZIP.GZIP )
                 .signWith( getSignKey(), Jwts.SIG.HS512 )
                 .compact();
     }

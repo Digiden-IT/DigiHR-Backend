@@ -1,4 +1,4 @@
-package com.digiHR.user.utility.exceptions;
+package com.digiHR.utility.exceptions;
 
 public class NotFoundException extends RuntimeException{
 

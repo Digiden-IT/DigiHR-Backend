@@ -7,8 +7,8 @@ import com.digiHR.user.request.AddUserRequest;
 import com.digiHR.user.request.GetUserRequest;
 import com.digiHR.user.response.FilterOptionResponse;
 import com.digiHR.user.response.UserResponse;
-import com.digiHR.user.utility.exceptions.NotFoundException;
-import com.digiHR.user.utility.response.PaginatedApiResponse;
+import com.digiHR.utility.exceptions.NotFoundException;
+import com.digiHR.utility.response.PaginatedApiResponse;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
@@ -63,7 +63,7 @@ public class UserService {
         Page<User> userPage = userRepository.findAll( userSpecification, pageable );
 
         List<UserResponse> userResponseList = userPage.stream()
-                .map(UserResponse::new)
+                .map( UserResponse::new )
                 .toList();
 
         return new PaginatedApiResponse<>(
@@ -78,9 +78,10 @@ public class UserService {
 
         return filterByIsActive( request.getIsActive() )
                 .and( filterByIsDeletedNull().or( filterByIsDeletedFalse() ) )
-                .and( filterByRoleIn( List.of( request.getRole() ) ) );
+                .and( filterByRoleIn( request.getRole() == null ? null : List.of( request.getRole() ) ) );
     }
 
+    @Transactional
     public UserResponse updateUser( Long id, AddUserRequest request ) {
 
         User user = entityManager.getReference( User.class, id );
