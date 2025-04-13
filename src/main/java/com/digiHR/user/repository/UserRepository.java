@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
@@ -23,4 +24,6 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
 
     @Cacheable( value = "userByIdCache", key = "#currentUserId", unless = "#result == null" )
     User getUserById( Long currentUserId );
+
+    List<User> findByIsActiveTrue();
 }

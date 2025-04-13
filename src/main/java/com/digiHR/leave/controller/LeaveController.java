@@ -3,8 +3,10 @@ package com.digiHR.leave.controller;
 import com.digiHR.leave.repository.LeaveRepository;
 import com.digiHR.leave.request.AddLeaveRequest;
 import com.digiHR.leave.request.GetLeaveRequest;
+import com.digiHR.leave.request.UpdateLeaveStatusRequest;
 import com.digiHR.leave.response.FilterOptionResponse;
 import com.digiHR.leave.response.LeaveResponse;
+import com.digiHR.leave.response.UserLeaveSummaryResponse;
 import com.digiHR.leave.service.LeaveService;
 import com.digiHR.user.service.LoggedInUserService;
 import com.digiHR.utility.response.PaginatedApiResponse;
@@ -18,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor( onConstructor_ = @Autowired )
-@RequestMapping(   "/leaves" )
+@RequestMapping( "/leaves" )
 public class LeaveController {
     private final LeaveService leaveService;
     private final LeaveRepository leaveRepository;
@@ -35,10 +37,21 @@ public class LeaveController {
         return ResponseEntity.ok( response );
     }
 
-    @GetMapping(  "/filter-options" )
+    @PatchMapping( "/{id}" )
+    public ResponseEntity<LeaveResponse> updateLeaveStatus( @PathVariable Long id, @RequestBody UpdateLeaveStatusRequest request ) {
+        LeaveResponse updatedLeaveStatus = leaveService.updateLeaveStatus( id, request );
+        return ResponseEntity.ok( updatedLeaveStatus );
+    }
+    @GetMapping( "/filter-options" )
     public ResponseEntity<FilterOptionResponse> getFilterOptions() {
         FilterOptionResponse options = leaveService.getFilterOptions();
         return ResponseEntity.ok( options );
+    }
+
+    @GetMapping( "/leave-summary" )
+    public ResponseEntity<UserLeaveSummaryResponse> getLeaveSummaryForLoggedInUser() {
+        UserLeaveSummaryResponse leaveSummary = leaveService.getLeaveSummaryForUser();
+        return ResponseEntity.ok( leaveSummary );
     }
 
 

@@ -8,7 +8,6 @@ public class LeaveSpecification {
         if ( requestedById == null )
             return Specification.where( null );
 
-        return ( root, query, criteriaBuilder ) ->
-                criteriaBuilder.equal( root.get( "requestedBy" ).get( "id" ), requestedById );
+        return ( root, query, criteriaBuilder ) -> criteriaBuilder.equal( root.get( "employee" ).get( "id" ), requestedById );
     }
 }

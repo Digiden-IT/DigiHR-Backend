@@ -17,10 +17,10 @@ public class LeaveResponse {
 
    public LeaveResponse( Leave leave ) {
        this.id=leave.getId();
-       this.employeeName = (leave.getEmployee() != null) ? leave.getEmployee().getName() : null;
+       this.employeeName = ( leave.getEmployee() != null ) ? leave.getEmployee().getName() : null;
        this.startDate=leave.getStartDate();
        this.endDate=leave.getEndDate();
        this.reason=leave.getReason();
-       this.requestStatus = (leave.getRequestStatus() != null) ? leave.getRequestStatus(): null;
+       this.requestStatus = ( leave.getRequestStatus() != null ) ? leave.getRequestStatus(): RequestStatus.PENDING;
    }
 }
