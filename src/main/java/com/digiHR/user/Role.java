@@ -12,6 +12,7 @@ public enum Role {
     public String getvalue(){
         return role;
     }
+
     Role( String role ) {
         this.role = role;
     }

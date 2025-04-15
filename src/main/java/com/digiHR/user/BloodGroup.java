@@ -15,6 +15,7 @@ public enum BloodGroup {
     public String getvalue(){
         return bloodGroup;
     }
+
     BloodGroup( String bloodGroup ) {
         this.bloodGroup = bloodGroup;
     }
