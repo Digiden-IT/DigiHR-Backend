@@ -4,11 +4,8 @@ import com.digiHR.user.*;
 import com.digiHR.user.request.AddUserRequest;
 import com.digiHR.utility.audit.AuditableEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
 
 @Table( name = "users" )
 @Entity
