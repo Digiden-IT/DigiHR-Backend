@@ -1,6 +1,6 @@
-/*package com.digiHR.leavecountsetting.model;
+package com.digiHR.leavecountsetting.model;
 
-import com.digiHR.user.model.User;
+
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -11,12 +11,12 @@ import lombok.Setter;
 @Table( name = "settings" )
 @Getter
 @Setter
-public class LeaveCountSetting {
+public class Setting {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column( name = "totalLeave" )
-    private String totalLeave;
-}*/
+    @Column( length = 1000 )
+    private String leaveCountSetting;
+}

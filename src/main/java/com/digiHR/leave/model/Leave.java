@@ -28,6 +28,7 @@ public class Leave {
     @Column( name = "endDate" )
     private LocalDate endDate;
 
+    @Enumerated(EnumType.STRING)
     @Column( name = "leaveReason" )
     private LeaveReason leaveReason;
 

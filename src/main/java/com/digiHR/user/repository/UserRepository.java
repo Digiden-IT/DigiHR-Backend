@@ -25,4 +25,12 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     @Cacheable( value = "userByIdCache", key = "#currentUserId", unless = "#result == null" )
     User getUserById( Long currentUserId );
 
+    @Modifying
+    @Query(
+            "UPDATE User u " +
+            "SET u.totalCasualLeaves = :casual, u.totalSickLeaves = :sick, u.totalVacationLeaves = :vacation" +
+            " WHERE u.isActive = true"
+    )
+    void updateAllActiveUserLeaves( Integer casual, Integer sick, Integer vacation );
+
 }

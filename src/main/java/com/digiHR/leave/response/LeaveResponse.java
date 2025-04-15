@@ -21,5 +21,6 @@ public class LeaveResponse {
        this.startDate=leave.getStartDate();
        this.endDate=leave.getEndDate();
        this.leaveReason=leave.getLeaveReason();
+       this.requestStatus = leave.getRequestStatus();
    }
 }

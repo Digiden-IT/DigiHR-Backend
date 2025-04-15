@@ -100,7 +100,7 @@ public class LeaveService {
     /*public UserLeaveSummaryResponse getLeaveSummaryForUser() {
         User user = loggedInUserService.getLoginUser();
         int totalLeave = leaveCountSettingRepository.findByUser( user )
-                .map( LeaveCountSetting::getTotalLeave )
+                .map( Setting::getTotalLeave )
                 .orElse( 0 );
 
         List<Leave> approvedLeaves = leaveRepository.findByEmployeeAndRequestStatus(user, RequestStatus.APPROVED);
