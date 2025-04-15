@@ -14,6 +14,10 @@ public enum Department {
 
     private final String department;
 
+    public String getvalue(){
+        return department;
+    }
+
     Department( String department ) {
         this.department = department;
     }
