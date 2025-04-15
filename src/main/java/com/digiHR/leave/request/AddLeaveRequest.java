@@ -1,5 +1,6 @@
 package com.digiHR.leave.request;
 
+import com.digiHR.leave.LeaveReason;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -8,5 +9,5 @@ import java.time.LocalDate;
 public class AddLeaveRequest {
     private LocalDate startDate;
     private LocalDate endDate;
-    private String reason;
+    private LeaveReason leaveReason;
 }

@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface LeaveRepository extends JpaRepository<Leave, Long>, JpaSpecificationExecutor<Leave> {
-    List<Leave> findByEmployeeAndRequestStatus( User employee, RequestStatus requestStatus );
 
+    List<Leave> findByEmployeeAndRequestStatus( User employee, RequestStatus requestStatus );
 }

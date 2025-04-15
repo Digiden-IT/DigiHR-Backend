@@ -26,8 +26,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 
@@ -40,7 +38,6 @@ public class LeaveService {
 
     @PersistenceContext
     private final EntityManager entityManager;
-    private final LeaveCountSettingRepository leaveCountSettingRepository;
 
     public PaginatedApiResponse<List<LeaveResponse>> getLeaves( GetLeaveRequest request, Pageable pageable ) {
 
@@ -56,14 +53,15 @@ public class LeaveService {
     }
 
     private Specification<Leave> getLeaveSpecification( GetLeaveRequest request ) {
-        return LeaveSpecification.filterByRequestedBy( request.getRequestedBy() );
+        return LeaveSpecification.filterByRequestedBy( request.getRequestedBy() )
+                .and(LeaveSpecification.filterByRequestStatus(request.getRequestStatus()))
+                .and(LeaveSpecification.filterByLeaveReason(request.getLeaveReason()));
     }
 
-    public LeaveResponse applyLeave( AddLeaveRequest request ) {
+    public LeaveResponse applyForLeave( AddLeaveRequest request ) {
 
         User user = loggedInUserService.getLoginUser();
         Leave leave = new Leave( request, user );
-        leave.setRequestStatus( RequestStatus.PENDING );
         leave = leaveRepository.save( leave );
 
         return new LeaveResponse( leave );
@@ -79,6 +77,7 @@ public class LeaveService {
         Leave updatedLeaveStatus = leaveRepository.save( leave );
         return new LeaveResponse( updatedLeaveStatus );
     }
+
     public FilterOptionResponse getFilterOptions() {
 
         List<Department> departments = List.of( Department.values() );

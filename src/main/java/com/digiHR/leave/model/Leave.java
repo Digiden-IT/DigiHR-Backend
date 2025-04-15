@@ -1,5 +1,6 @@
 package com.digiHR.leave.model;
 
+import com.digiHR.leave.LeaveReason;
 import com.digiHR.leave.RequestStatus;
 import com.digiHR.leave.request.AddLeaveRequest;
 import com.digiHR.user.model.User;
@@ -21,27 +22,28 @@ public class Leave {
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private Long id;
 
-    @ManyToOne( fetch = FetchType.LAZY )
-    @JoinColumn( name = "employee_id", foreignKey = @ForeignKey( name = "fk_leave_employee_id" ) )
-    private User employee;
-
     @Column( name = "startDate" )
     private LocalDate startDate;
 
     @Column( name = "endDate" )
     private LocalDate endDate;
 
-    @Column( name = "reason" )
-    private String reason;
+    @Column( name = "leaveReason" )
+    private LeaveReason leaveReason;
 
     @Enumerated( EnumType.STRING )
     @Column( name = "status" )
     private RequestStatus requestStatus;
 
+    @ManyToOne( fetch = FetchType.LAZY )
+    @JoinColumn( name = "employee_id", foreignKey = @ForeignKey( name = "fk_leave_employee_id" ) )
+    private User employee;
+
     public Leave( AddLeaveRequest request, User employee ) {
         this.employee = employee;
         this.startDate = request.getStartDate();
         this.endDate = request.getEndDate();
-        this.reason = request.getReason();
+        this.leaveReason = request.getLeaveReason();
+        this.requestStatus=RequestStatus.PENDING;
     }
 }
