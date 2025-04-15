@@ -4,11 +4,11 @@ import lombok.Getter;
 
 @Getter
 public enum LeaveReason {
-    CASUALEAVE(  "casual_leave" ),
-    SICKLEAVE(  "sick_leave" ),
-    FAMILYVACATION(  "family_vacation" );
+    CASUAL_LEAVE("Casual Leave"),
+    SICK_LEAVE("Sick Leave"),
+    VACATION_LEAVE("Vacation Leave");
 
-    final String name;
+    private final String name;
 
     LeaveReason( String name ) {
         this.name = name;

@@ -1,4 +1,4 @@
-package com.digiHR.leavecountsetting.model;
+/*package com.digiHR.leavecountsetting.model;
 
 import com.digiHR.user.model.User;
 import jakarta.persistence.*;
@@ -19,4 +19,4 @@ public class LeaveCountSetting {
 
     @Column( name = "totalLeave" )
     private String totalLeave;
-}
+}*/

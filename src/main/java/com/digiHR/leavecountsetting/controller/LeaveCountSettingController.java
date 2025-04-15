@@ -1,4 +1,4 @@
-package com.digiHR.leavecountsetting.controller;
+/*package com.digiHR.leavecountsetting.controller;
 
 import com.digiHR.leavecountsetting.Request.AddLeaveCountSettingRequest;
 import com.digiHR.leavecountsetting.service.LeaveCountSettingService;
@@ -22,4 +22,4 @@ public class LeaveCountSettingController {
         String response = leaveCountSettingService.initializeLeaveCountForActiveUsers( request );
         return ResponseEntity.ok( response );
     }
-}
+}*/

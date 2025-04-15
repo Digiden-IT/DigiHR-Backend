@@ -1,4 +1,4 @@
-package com.digiHR.leavecountsetting.model;
+/*package com.digiHR.leavecountsetting.model;
 
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -23,4 +23,4 @@ public class LeaveCountSettingAdapter implements JsonSerializer<LeaveCountSettin
 
         return setting;
     }
-}
+}*/

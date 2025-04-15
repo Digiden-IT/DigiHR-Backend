@@ -25,5 +25,4 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     @Cacheable( value = "userByIdCache", key = "#currentUserId", unless = "#result == null" )
     User getUserById( Long currentUserId );
 
-    List<User> findByIsActiveTrue();
 }

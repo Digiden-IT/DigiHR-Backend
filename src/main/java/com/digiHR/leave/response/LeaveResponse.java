@@ -1,5 +1,6 @@
 package com.digiHR.leave.response;
 
+import com.digiHR.leave.LeaveReason;
 import com.digiHR.leave.RequestStatus;
 import com.digiHR.leave.model.Leave;
 import lombok.Data;
@@ -11,7 +12,7 @@ public class LeaveResponse {
    private String employeeName;
    private LocalDate startDate;
    private LocalDate endDate;
-   private String reason;
+   private LeaveReason leaveReason;
    private RequestStatus requestStatus;
 
    public LeaveResponse( Leave leave ) {
@@ -19,7 +20,6 @@ public class LeaveResponse {
        this.employeeName = ( leave.getEmployee() != null ) ? leave.getEmployee().getName() : null;
        this.startDate=leave.getStartDate();
        this.endDate=leave.getEndDate();
-       this.reason=leave.getReason();
-       this.requestStatus = ( leave.getRequestStatus() != null ) ? leave.getRequestStatus(): RequestStatus.PENDING;
+       this.leaveReason=leave.getLeaveReason();
    }
 }

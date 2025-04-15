@@ -4,11 +4,11 @@ import lombok.Getter;
 
 @Getter
 public enum RequestStatus {
-    APPROVED( "approved" ),
-    REJECTED( "rejected" ),
-    PENDING( "pending" );
+    APPROVED( "Approved" ),
+    REJECTED( "Rejected" ),
+    PENDING( "Pending" );
 
-    final String name;
+    private final String name;
 
     RequestStatus( String name ) {
         this.name = name;

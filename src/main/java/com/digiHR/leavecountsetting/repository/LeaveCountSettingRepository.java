@@ -1,4 +1,4 @@
-package com.digiHR.leavecountsetting.repository;
+/*package com.digiHR.leavecountsetting.repository;
 
 import com.digiHR.leavecountsetting.model.LeaveCountSetting;
 import com.digiHR.user.model.User;
@@ -11,4 +11,4 @@ import java.util.Optional;
 public interface LeaveCountSettingRepository extends JpaRepository<LeaveCountSetting, Long> {
     boolean existsByUser( User user );
     Optional<LeaveCountSetting> findByUser( User user );
-}
+}*/
