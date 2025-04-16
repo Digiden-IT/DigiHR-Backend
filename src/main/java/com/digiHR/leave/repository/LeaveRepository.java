@@ -15,8 +15,6 @@ public interface LeaveRepository extends JpaRepository<Leave, Long>, JpaSpecific
 
     List<Leave> findByEmployeeAndRequestStatus( User employee, RequestStatus requestStatus );
 
-    @Query( "SELECT COALESCE(SUM(DATEDIFF(l.endDate, l.startDate) + 1), 0 ) "
-            + "FROM Leave l WHERE l.employee = :employee AND l.requestStatus = :status")
-    Integer countByEmployeeAndRequestStatus( @Param("employee") User employee,
-                                         @Param("status") RequestStatus status );
+    @Query( "SELECT COUNT(l) FROM Leave l WHERE l.employee = :employee AND l.requestStatus = :status")
+    Integer countByEmployeeAndRequestStatus(@Param("employee") User employee, @Param("status") RequestStatus requestStatus);
 }

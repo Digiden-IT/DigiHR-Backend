@@ -4,10 +4,11 @@ import com.digiHR.leave.LeaveReason;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 public class AddLeaveRequest {
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private Date startDate;
+    private Date endDate;
     private LeaveReason leaveReason;
 }

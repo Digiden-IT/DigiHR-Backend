@@ -8,8 +8,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
 
 @Data
 @Entity
@@ -23,10 +25,10 @@ public class Leave {
     private Long id;
 
     @Column( name = "startDate" )
-    private LocalDate startDate;
+    private Date startDate;
 
     @Column( name = "endDate" )
-    private LocalDate endDate;
+    private Date endDate;
 
     @Enumerated(EnumType.STRING)
     @Column( name = "leaveReason" )
@@ -42,7 +44,7 @@ public class Leave {
 
     public Leave( AddLeaveRequest request, User employee ) {
         this.employee = employee;
-        this.startDate = request.getStartDate();
+        this.startDate =request.getStartDate();
         this.endDate = request.getEndDate();
         this.leaveReason = request.getLeaveReason();
         this.requestStatus=RequestStatus.PENDING;

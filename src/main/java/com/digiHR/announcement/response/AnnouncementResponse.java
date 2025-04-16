@@ -1,8 +1,10 @@
 package com.digiHR.announcement.response;
 
 import com.digiHR.announcement.model.Announcement;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 public class AnnouncementResponse {
@@ -10,7 +12,8 @@ public class AnnouncementResponse {
     private String title;
     private String description;
     private String authorName;
-    private LocalDateTime announcementDate;
+    @JsonFormat( pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING )
+    private Date announcementDate;
 
     public AnnouncementResponse( Announcement announcement ) {
         this.id = announcement.getId();

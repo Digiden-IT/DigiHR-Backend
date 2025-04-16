@@ -116,7 +116,7 @@ public class LeaveService {
         Integer totalLeave =  leaveCountSetting.getTotalCasualLeaves() + leaveCountSetting.getTotalSickLeaves() + leaveCountSetting.getTotalVacationLeaves() ;
         Integer approvedLeaveCount = leaveRepository.countByEmployeeAndRequestStatus( user, RequestStatus.APPROVED );
         Integer pendingLeaveCount = leaveRepository.countByEmployeeAndRequestStatus( user, RequestStatus.PENDING );
-        Integer availableLeave = totalLeave - approvedLeaveCount + pendingLeaveCount;
+        Integer availableLeave = totalLeave - approvedLeaveCount - pendingLeaveCount;
 
         return new UserLeaveSummaryResponse( approvedLeaveCount, pendingLeaveCount, availableLeave );
     }
