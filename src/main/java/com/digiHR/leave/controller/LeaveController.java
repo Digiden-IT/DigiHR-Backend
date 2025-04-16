@@ -47,11 +47,11 @@ public class LeaveController {
         return ResponseEntity.ok( options );
     }
 
-    /*@GetMapping( "/leave-summary" )
+    @GetMapping( "/leave-summary" )
     public ResponseEntity<UserLeaveSummaryResponse> getLeaveSummaryForLoggedInUser() {
         UserLeaveSummaryResponse leaveSummary = leaveService.getLeaveSummaryForUser();
         return ResponseEntity.ok( leaveSummary );
-    }*/
+    }
 
 
 }

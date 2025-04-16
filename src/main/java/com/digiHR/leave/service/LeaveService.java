@@ -10,11 +10,17 @@ import com.digiHR.leave.request.GetLeaveRequest;
 import com.digiHR.leave.request.UpdateLeaveStatusRequest;
 import com.digiHR.leave.response.FilterOptionResponse;
 import com.digiHR.leave.response.LeaveResponse;
+import com.digiHR.leave.response.UserLeaveSummaryResponse;
+import com.digiHR.leavecountsetting.Request.LeaveCountSetting;
+import com.digiHR.leavecountsetting.model.Setting;
+import com.digiHR.leavecountsetting.repository.SettingRepository;
 import com.digiHR.user.Department;
 import com.digiHR.user.model.User;
 import com.digiHR.user.service.LoggedInUserService;
+import com.digiHR.utility.exceptions.NotFoundException;
 import com.digiHR.utility.response.EnumResponse;
 import com.digiHR.utility.response.PaginatedApiResponse;
+import com.google.gson.Gson;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
@@ -36,6 +42,7 @@ public class LeaveService {
 
     private final LeaveRepository leaveRepository;
     private final LoggedInUserService loggedInUserService;
+    private final SettingRepository settingRepository;
 
     @PersistenceContext
     private final EntityManager entityManager;
@@ -97,24 +104,20 @@ public class LeaveService {
     }
 
 
-    /*public UserLeaveSummaryResponse getLeaveSummaryForUser() {
+    public UserLeaveSummaryResponse getLeaveSummaryForUser() {
         User user = loggedInUserService.getLoginUser();
-        int totalLeave = leaveCountSettingRepository.findByUser( user )
-                .map( Setting::getTotalLeave )
-                .orElse( 0 );
 
-        List<Leave> approvedLeaves = leaveRepository.findByEmployeeAndRequestStatus(user, RequestStatus.APPROVED);
-        List<Leave> pendingLeaves  = leaveRepository.findByEmployeeAndRequestStatus(user, RequestStatus.PENDING);
+        Setting setting = settingRepository.findTopByOrderByIdDesc()
+                .orElseThrow( () -> new NotFoundException( "Leave Setting", 1L ) );
 
-        int usedLeave = approvedLeaves.stream()
-                .mapToInt( leave -> ( int ) ChronoUnit.DAYS.between( leave.getStartDate(), leave.getEndDate()) + 1 )
-                .sum();
+        Gson gson = new Gson();
+        LeaveCountSetting leaveCountSetting = gson.fromJson( setting.getLeaveCountSetting(), LeaveCountSetting.class );
 
-        int pendingLeave = pendingLeaves.stream()
-                .mapToInt( leave -> ( int ) ChronoUnit.DAYS.between( leave.getStartDate(), leave.getEndDate()) + 1 )
-                .sum();
-        int availableLeave = totalLeave - usedLeave - pendingLeave;
+        Integer totalLeave =  leaveCountSetting.getTotalCasualLeaves() + leaveCountSetting.getTotalSickLeaves() + leaveCountSetting.getTotalVacationLeaves() ;
+        Integer approvedLeaveCount = leaveRepository.countByEmployeeAndRequestStatus( user, RequestStatus.APPROVED );
+        Integer pendingLeaveCount = leaveRepository.countByEmployeeAndRequestStatus( user, RequestStatus.PENDING );
+        Integer availableLeave = totalLeave - approvedLeaveCount + pendingLeaveCount;
 
-        return new UserLeaveSummaryResponse( usedLeave, pendingLeave, availableLeave );
-    }*/
+        return new UserLeaveSummaryResponse( approvedLeaveCount, pendingLeaveCount, availableLeave );
+    }
 }
