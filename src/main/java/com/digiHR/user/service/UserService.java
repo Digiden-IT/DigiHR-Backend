@@ -131,7 +131,9 @@ public class UserService {
     @Transactional
     public void deleteUser( Long id ) {
 
-        User user = entityManager.getReference( User.class, id );
+        User user = userRepository.findById( id )
+                .orElseThrow( () -> new NotFoundException( "user", id ) );
+        user.setIsActive( false );
         user.setIsDeleted( true );
         userRepository.save( user );
     }
