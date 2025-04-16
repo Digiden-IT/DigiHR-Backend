@@ -133,7 +133,6 @@ public class UserService {
 
         User user = userRepository.findById( id )
                 .orElseThrow( () -> new NotFoundException( "user", id ) );
-        user.setIsActive( false );
         user.setIsDeleted( true );
         userRepository.save( user );
     }
