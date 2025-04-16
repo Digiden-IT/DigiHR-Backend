@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table( name = "holidays" )
@@ -25,7 +26,7 @@ public class Holiday extends AuditableEntity {
     private String holidayName;
 
     @Column( name = "date", nullable = false )
-    private LocalDate date;
+    private Date date;
 
     public Holiday( AddHolidayRequest addHolidayRequest ) {
         this.holidayName = addHolidayRequest.getHolidayName();

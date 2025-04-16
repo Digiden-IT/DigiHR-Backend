@@ -11,6 +11,10 @@ public enum EmployeeType {
 
     private final String type;
 
+    public String getvalue(){
+        return type;
+    }
+
     EmployeeType( String type ) {
         this.type = type;
     }

@@ -12,6 +12,10 @@ public enum BloodGroup {
 
     private final String bloodGroup;
 
+    public String getvalue(){
+        return bloodGroup;
+    }
+
     BloodGroup( String bloodGroup ) {
         this.bloodGroup = bloodGroup;
     }
