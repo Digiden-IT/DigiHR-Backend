@@ -12,7 +12,7 @@ public class UserResponse {
     private Long id;
     private String name;
     private String email;
-    private String phone_number;
+    private String phoneNumber;
     private String employeeCode;
     private String designation;
     private String dateOfBirth;
@@ -28,7 +28,7 @@ public class UserResponse {
         this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();
-        this.phone_number = user.getPhoneNumber();
+        this.phoneNumber = user.getPhoneNumber();
         this.employeeCode = user.getEmployeeCode();
         this.employeeType = user.getEmployeeType();
         this.designation = user.getDesignation();
