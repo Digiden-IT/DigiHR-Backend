@@ -3,6 +3,7 @@ package com.digiHR.announcement.repository;
 import com.digiHR.announcement.model.Announcement;
 import org.springframework.data.jpa.domain.Specification;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class AnnouncementSpecification {
 
@@ -13,7 +14,7 @@ public class AnnouncementSpecification {
         return ( root, query, criteriaBuilder ) -> criteriaBuilder.equal( root.get( "postedBy" ).get( "id" ), postedById );
     }
 
-    public static Specification<Announcement> filterByAnnouncementDateRange( LocalDateTime startDate, LocalDateTime endDate ) {
+    public static Specification<Announcement> filterByAnnouncementDateRange( Date startDate, Date endDate ) {
         if ( startDate == null || endDate == null )
             return Specification.where(null );
 

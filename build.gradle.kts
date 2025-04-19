@@ -34,6 +34,7 @@ dependencies {
     implementation("org.bouncycastle:bcprov-jdk18on:1.80")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.liquibase:liquibase-core")
+    implementation ("com.google.code.gson:gson:2.12.1")
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
     "developmentOnly"("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")

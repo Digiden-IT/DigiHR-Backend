@@ -57,8 +57,14 @@ public class User extends AuditableEntity {
     @Column( name = "date_of_joining" )
     private String dateOfJoining;
 
-    @Column( name = "total_leaves" )
-    private Integer totalLeaves;
+    @Column( name = "totalCasualLeaves" )
+    private Integer totalCasualLeaves;
+
+    @Column( name = "totalSickLeaves" )
+    private Integer totalSickLeaves;
+
+    @Column( name = "totalVacationLeaves" )
+    private Integer totalVacationLeaves;
 
     @Column( name = "password", nullable = false )
     private String password;
