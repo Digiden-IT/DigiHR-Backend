@@ -9,7 +9,4 @@ import java.util.Date;
 public class AddAnnouncementRequest {
     private String title;
     private String description;
-
-    @DateTimeFormat( pattern = "yyyy-MM-dd" )
-    private Date announcementDate;
 }

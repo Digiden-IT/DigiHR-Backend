@@ -19,7 +19,7 @@ public class SettingController {
     private final SettingService settingService;
 
     @PostMapping()
-    public ResponseEntity<?> saveSetting( @RequestBody LeaveCountSetting setting ) {
+    public ResponseEntity<?> saveLeaveSetting( @RequestBody LeaveCountSetting setting ) {
         settingService.saveLeaveSetting( setting );
         return ResponseEntity.ok( "Saved" );
     }

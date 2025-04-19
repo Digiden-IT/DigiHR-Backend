@@ -37,6 +37,6 @@ public class Announcement {
         this.title = request.getTitle();
         this.description = request.getDescription();
         this.postedBy = user;
-        this.announcementDate = request.getAnnouncementDate();
+        this.announcementDate = new Date();
     }
 }

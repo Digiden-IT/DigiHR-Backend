@@ -62,8 +62,8 @@ public class LeaveService {
 
     private Specification<Leave> getLeaveSpecification( GetLeaveRequest request ) {
         return LeaveSpecification.filterByRequestedBy( request.getRequestedBy() )
-                .and(LeaveSpecification.filterByRequestStatus(request.getRequestStatus()))
-                .and(LeaveSpecification.filterByLeaveReason(request.getLeaveReason()));
+                .and( LeaveSpecification.filterByRequestStatus( request.getRequestStatus() ) )
+                .and( LeaveSpecification.filterByLeaveReason( request.getLeaveReason() ) );
     }
 
     public LeaveResponse applyForLeave( AddLeaveRequest request ) {
@@ -82,8 +82,8 @@ public class LeaveService {
         if ( request.getRequestStatus() != null )
             leave.setRequestStatus( request.getRequestStatus() );
 
-        Leave updatedLeaveStatus = leaveRepository.save( leave );
-        return new LeaveResponse( updatedLeaveStatus );
+        Leave updatedLeave = leaveRepository.save( leave );
+        return new LeaveResponse( updatedLeave);
     }
 
     public FilterOptionResponse getFilterOptions() {
@@ -103,7 +103,7 @@ public class LeaveService {
         return new FilterOptionResponse( departments, leaveReasons, requestStatuses );
     }
 
-
+    @Transactional
     public UserLeaveSummaryResponse getLeaveSummaryForUser() {
         User user = loggedInUserService.getLoginUser();
 
@@ -114,10 +114,10 @@ public class LeaveService {
         LeaveCountSetting leaveCountSetting = gson.fromJson( setting.getLeaveCountSetting(), LeaveCountSetting.class );
 
         Integer totalLeave =  leaveCountSetting.getTotalCasualLeaves() + leaveCountSetting.getTotalSickLeaves() + leaveCountSetting.getTotalVacationLeaves() ;
-        Integer approvedLeaveCount = leaveRepository.countByEmployeeAndRequestStatus( user, RequestStatus.APPROVED );
-        Integer pendingLeaveCount = leaveRepository.countByEmployeeAndRequestStatus( user, RequestStatus.PENDING );
+        Integer approvedLeaveCount = leaveRepository.sumLeaveDays( user.getId(), RequestStatus.APPROVED.toString() );
+        Integer pendingLeaveCount = leaveRepository.sumLeaveDays( user.getId(), RequestStatus.PENDING.toString() );
         Integer availableLeave = totalLeave - approvedLeaveCount - pendingLeaveCount;
 
-        return new UserLeaveSummaryResponse( approvedLeaveCount, pendingLeaveCount, availableLeave );
+        return new UserLeaveSummaryResponse( totalLeave, approvedLeaveCount, pendingLeaveCount, availableLeave );
     }
 }

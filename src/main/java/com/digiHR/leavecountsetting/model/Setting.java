@@ -9,8 +9,6 @@ import lombok.Setter;
 @Data
 @Entity
 @Table( name = "settings" )
-@Getter
-@Setter
 public class Setting {
 
     @Id

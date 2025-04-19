@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -15,6 +17,9 @@ public interface LeaveRepository extends JpaRepository<Leave, Long>, JpaSpecific
 
     List<Leave> findByEmployeeAndRequestStatus( User employee, RequestStatus requestStatus );
 
-    @Query( "SELECT COUNT(l) FROM Leave l WHERE l.employee = :employee AND l.requestStatus = :status")
-    Integer countByEmployeeAndRequestStatus(@Param("employee") User employee, @Param("status") RequestStatus requestStatus);
+    @Query(value = "SELECT COALESCE( SUM( EXTRACT( DAY FROM (end_date - start_date) ) + 1 ), 0 ) " +
+            "FROM leaves " +
+            "WHERE employee_id = ?1 AND status = ?2", nativeQuery = true )
+    Integer sumLeaveDays( Long employeeId, String status );
+
 }

@@ -28,9 +28,9 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     @Modifying
     @Query(
             "UPDATE User u " +
-            "SET u.totalCasualLeaves = :casual, u.totalSickLeaves = :sick, u.totalVacationLeaves = :vacation" +
-            " WHERE u.isActive = true"
+            "SET u.totalCasualLeaves = ?1, u.totalSickLeaves = ?2, u.totalVacationLeaves = ?3 " +
+            "WHERE u.isActive = true"
     )
-    void updateAllActiveUserLeaves( Integer casual, Integer sick, Integer vacation );
+    void updateAllActiveUserLeaves( Integer casualLeave, Integer sickLeave, Integer vacationLeave );
 
 }

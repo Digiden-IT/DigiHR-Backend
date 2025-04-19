@@ -24,6 +24,9 @@ public class Leave {
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private Long id;
 
+    @Column(name = "requestDate")
+    private Date requestDate;
+
     @Column( name = "startDate" )
     private Date startDate;
 
@@ -44,6 +47,7 @@ public class Leave {
 
     public Leave( AddLeaveRequest request, User employee ) {
         this.employee = employee;
+        this.requestDate = new Date();
         this.startDate =request.getStartDate();
         this.endDate = request.getEndDate();
         this.leaveReason = request.getLeaveReason();

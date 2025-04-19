@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserLeaveSummaryResponse {
+    private int totalLeave;
     private int usedLeave;
     private int pendingLeave;
     private int availableLeave;
-
 }

@@ -52,6 +52,4 @@ public class LeaveController {
         UserLeaveSummaryResponse leaveSummary = leaveService.getLeaveSummaryForUser();
         return ResponseEntity.ok( leaveSummary );
     }
-
-
 }
