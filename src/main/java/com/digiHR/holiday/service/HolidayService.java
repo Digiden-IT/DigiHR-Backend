@@ -45,8 +45,6 @@ public class HolidayService {
         Specification<Holiday> holidaySpecification = getHolidaySpecification ( request );
         Page<Holiday> holidayPage = holidayRepository.findAll( holidaySpecification, pageable);
 
-
-
         List<HolidayResponse> holidayResponseList = holidayPage.stream()
                 .map( HolidayResponse ::new )
                 .toList();
@@ -60,8 +58,10 @@ public class HolidayService {
     }
 
     private Specification<Holiday> getHolidaySpecification ( GetHolidayRequest request ) {
+
+        if (Objects.equals( request.getIsUpcoming(), true) )
+            return filterByIsUpcoming( request.getIsUpcoming() );
         return filterByHolidayDateRange( request.getHolidayDateStart(), request.getHolidayDateEnd() );
-//                .and( filterByIsUpcoming( request.getIsUpcoming() ) );
     }
 
     @Transactional

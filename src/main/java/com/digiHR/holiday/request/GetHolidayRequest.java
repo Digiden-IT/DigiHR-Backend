@@ -13,5 +13,6 @@ public class GetHolidayRequest {
     private Date holidayDateStart;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date holidayDateEnd;
+    private Boolean isUpcoming;
 }
 
