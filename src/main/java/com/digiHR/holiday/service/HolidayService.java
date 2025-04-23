@@ -58,8 +58,10 @@ public class HolidayService {
     }
 
     private Specification<Holiday> getHolidaySpecification ( GetHolidayRequest request ) {
-        return filterByHolidayDateRange( request.getHolidayDateStart(), request.getHolidayDateEnd() )
-                .and( filterByIsUpcoming( request.getIsUpcoming() ) );
+
+        if (Objects.equals( request.getIsUpcoming(), true) )
+            return filterByIsUpcoming( request.getIsUpcoming() );
+        return filterByHolidayDateRange( request.getHolidayDateStart(), request.getHolidayDateEnd() );
     }
 
     @Transactional
