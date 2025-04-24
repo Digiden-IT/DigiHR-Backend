@@ -20,8 +20,8 @@ public class LeaveResponse {
 
    @JsonFormat( pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING )
    private Date endDate;
-   private LeaveReason leaveReason;
-   private RequestStatus requestStatus;
+   private String leaveReason;
+   private String requestStatus;
    private int numberOfDays;
 
    public LeaveResponse( Leave leave ) {
@@ -31,8 +31,8 @@ public class LeaveResponse {
        this.requestDate = formatter.format( leave.getRequestDate() );
        this.startDate = leave.getStartDate();
        this.endDate= leave.getEndDate();
-       this.leaveReason=leave.getLeaveReason();
-       this.requestStatus = leave.getRequestStatus();
+       this.leaveReason=leave.getLeaveReason().getName();
+       this.requestStatus = leave.getRequestStatus().getName();
        this.numberOfDays = calculateNumberOfDays(leave.getStartDate(), leave.getEndDate());
    }
     private int calculateNumberOfDays(Date start, Date end) {
