@@ -20,7 +20,7 @@ public class SettingController {
     @PostMapping("/leave-count")
     public ApiResponse<?> saveLeaveSetting( @RequestBody LeaveCountSetting setting ) {
         settingService.saveLeaveSetting( setting );
-        return new ApiResponse<>( "Leave setting saved successfully", 200 );
+        return new ApiResponse<>( "Leave count setting saved successfully", 200 );
     }
 
     @GetMapping( "/leave-count" )

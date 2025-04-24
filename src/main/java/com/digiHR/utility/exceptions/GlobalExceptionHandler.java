@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import io.jsonwebtoken.security.SignatureException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,7 +68,12 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler( NotFoundException.class )
-    public ResponseEntity<Map<String, Object>> handleNotFoundException( NotFoundException ex ) {
+    public ResponseEntity<?> handleNotFoundException( NotFoundException ex ) {
+        return buildErrorResponse( HttpStatus.NOT_FOUND, ex.getMessage() );
+    }
+
+    @ExceptionHandler( NoResourceFoundException.class )
+    public ResponseEntity<Map<String, Object>> handleNoResourceFoundException( NoResourceFoundException ex ) {
         return buildErrorResponse( HttpStatus.NOT_FOUND, ex.getMessage() );
     }
 
