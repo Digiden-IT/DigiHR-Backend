@@ -1,10 +1,12 @@
-package com.digiHR.leavecountsetting.service;
+package com.digiHR.setting.service;
 
 
-import com.digiHR.leavecountsetting.Request.LeaveCountSetting;
-import com.digiHR.leavecountsetting.model.Setting;
-import com.digiHR.leavecountsetting.repository.SettingRepository;
+import com.digiHR.setting.Request.LeaveCountSetting;
+import com.digiHR.setting.model.Setting;
+import com.digiHR.setting.repository.SettingRepository;
+import com.digiHR.setting.response.LeaveCountSettingResponse;
 import com.digiHR.user.repository.UserRepository;
+import com.digiHR.utility.exceptions.NotFoundException;
 import com.google.gson.Gson;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -35,4 +37,17 @@ public class SettingService {
         );
     }
 
+    public LeaveCountSettingResponse getLeaveSetting() {
+        Setting setting = settingRepository.findTopByOrderByIdDesc()
+                .orElseThrow( () -> new NotFoundException( "Leave Setting", 1L ) );
+
+        Gson gson = new Gson();
+        LeaveCountSetting leaveCountSetting = gson.fromJson( setting.getLeaveCountSetting(), LeaveCountSetting.class );
+
+        return new LeaveCountSettingResponse(
+                leaveCountSetting.getTotalCasualLeaves(),
+                leaveCountSetting.getTotalSickLeaves(),
+                leaveCountSetting.getTotalVacationLeaves()
+        );
+    }
 }

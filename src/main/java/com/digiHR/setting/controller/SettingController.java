@@ -1,26 +1,29 @@
-package com.digiHR.leavecountsetting.controller;
+package com.digiHR.setting.controller;
 
-import com.digiHR.leavecountsetting.Request.LeaveCountSetting;
-import com.digiHR.leavecountsetting.service.SettingService;
+import com.digiHR.setting.Request.LeaveCountSetting;
+import com.digiHR.setting.response.LeaveCountSettingResponse;
+import com.digiHR.setting.service.SettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor( onConstructor_ = @Autowired )
-@RequestMapping( "/leavecountsetting" )
+@RequestMapping( "/setting" )
 
 public class SettingController {
 
     private final SettingService settingService;
 
-    @PostMapping()
+    @PostMapping("/leave-count")
     public ResponseEntity<?> saveLeaveSetting( @RequestBody LeaveCountSetting setting ) {
         settingService.saveLeaveSetting( setting );
         return ResponseEntity.ok( "Saved" );
+    }
+
+    @GetMapping( "/leave-count" )
+    public LeaveCountSettingResponse getLeaveSetting() {
+        return settingService.getLeaveSetting();
     }
 }
