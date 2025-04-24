@@ -17,11 +17,11 @@ public class UserResponse {
     private String designation;
     private String dateOfBirth;
     private String address;
-    private Department department;
-    private Role role;
-    private BloodGroup bloodGroup;
-    private Gender gender;
-    private EmployeeType employeeType;
+    private String department;
+    private String role;
+    private String bloodGroup;
+    private String gender;
+    private String employeeType;
     private String dateOfJoining;
 
     public UserResponse( User user ) {
@@ -30,14 +30,14 @@ public class UserResponse {
         this.email = user.getEmail();
         this.phoneNumber = user.getPhoneNumber();
         this.employeeCode = user.getEmployeeCode();
-        this.employeeType = user.getEmployeeType();
+        this.employeeType = user.getEmployeeType().getvalue();
         this.designation = user.getDesignation();
         this.dateOfBirth = user.getDateOfBirth();
         this.address = user.getAddress();
-        this.department = user.getDepartment();
-        this.gender = user.getGender();
-        this.role = user.getRole();
-        this.bloodGroup = user.getBloodGroup();
+        this.department = user.getDepartment().getvalue();
+        this.gender = user.getGender().getvalue();
+        this.role = user.getRole().getvalue();
+        this.bloodGroup = user.getBloodGroup().getvalue();
         this.dateOfJoining = user.getDateOfJoining();
     }
 }

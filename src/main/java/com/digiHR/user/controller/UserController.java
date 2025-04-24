@@ -22,13 +22,13 @@ public class UserController {
 
     private final UserService userService;
 
+    @PreAuthorize( "hasAuthority( 'Admin' )" )
     @PostMapping
     public ResponseEntity<UserResponse> addUser( @RequestBody AddUserRequest request ) {
         UserResponse response = userService.addUser( request );
         return ResponseEntity.ok( response );
     }
 
-    @PreAuthorize( "hasAuthority( 'Admin' )" )
     @GetMapping
     public ResponseEntity<?> getUsers( GetUserRequest request, Pageable pageable ) {
         PaginatedApiResponse<List<UserResponse>> userResponses = userService.getUsers( request, pageable);
