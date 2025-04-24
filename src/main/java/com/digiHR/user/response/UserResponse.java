@@ -1,6 +1,5 @@
 package com.digiHR.user.response;
 
-import com.digiHR.user.*;
 import com.digiHR.user.model.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,7 +35,7 @@ public class UserResponse {
         this.address = user.getAddress();
         this.department = user.getDepartment().getvalue();
         this.gender = user.getGender().getvalue();
-        this.role = user.getRole().getvalue();
+        this.role = user.getRole().getValue();
         this.bloodGroup = user.getBloodGroup().getvalue();
         this.dateOfJoining = user.getDateOfJoining();
     }

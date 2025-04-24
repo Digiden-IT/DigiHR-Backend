@@ -5,6 +5,7 @@ import com.digiHR.user.request.GetUserRequest;
 import com.digiHR.user.response.FilterOptionResponse;
 import com.digiHR.user.response.UserResponse;
 import com.digiHR.user.service.UserService;
+import com.digiHR.utility.response.ApiResponse;
 import com.digiHR.utility.response.PaginatedApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +50,9 @@ public class UserController {
 
     @PreAuthorize( "hasAuthority( 'Admin' )" )
     @DeleteMapping( "/{id}" )
-    public ResponseEntity<String> deleteUser( @PathVariable Long id ) {
+    public ApiResponse<?> deleteUser( @PathVariable Long id ) {
         userService.deleteUser( id );
-        return ResponseEntity.ok( "User deleted successfully" );
+        return new ApiResponse<>( "User deleted successfully", 200 );
     }
 
     @PreAuthorize( "hasAuthority( 'Admin' )" )

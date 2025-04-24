@@ -56,8 +56,12 @@ public class LeaveService {
                 .map( LeaveResponse::new )
                 .toList();
 
-        return new PaginatedApiResponse<>( leaveResponses, pageable.getPageNumber(),
-                leavePage.getTotalPages(), leavePage.getTotalElements() );
+        return new PaginatedApiResponse<>(
+                leaveResponses,
+                pageable.getPageNumber(),
+                leavePage.getTotalPages(),
+                leavePage.getTotalElements()
+        );
     }
 
     private Specification<Leave> getLeaveSpecification( GetLeaveRequest request ) {
