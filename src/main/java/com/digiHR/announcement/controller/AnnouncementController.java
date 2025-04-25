@@ -4,6 +4,7 @@ import com.digiHR.announcement.request.AddAnnouncementRequest;
 import com.digiHR.announcement.request.GetAnnouncementRequest;
 import com.digiHR.announcement.request.UpdateAnnouncementRequest;
 import com.digiHR.announcement.response.AnnouncementResponse;
+import com.digiHR.utility.response.ApiResponse;
 import com.digiHR.utility.response.PaginatedApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +45,8 @@ public class AnnouncementController {
 
     @PreAuthorize( "hasAuthority( 'Admin' )" )
     @DeleteMapping( "/{id}" )
-    public ResponseEntity<String> deleteAnnouncement( @PathVariable Long id ) {
+    public ApiResponse<?> deleteAnnouncement(@PathVariable Long id ) {
         announcementService.deleteAnnouncement( id );
-        return ResponseEntity.ok( "Announcement deleted successfully" );
+        return new ApiResponse<>( "Announcement deleted successfully", 200 );
     }
 }

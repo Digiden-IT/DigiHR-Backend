@@ -39,6 +39,7 @@ public class UserService {
 
     @PersistenceContext
     private final EntityManager entityManager;
+    private final LoggedInUserService loggedInUserService;
 
     @CacheEvict( value = "userCache", key = "#email" )
     public void evictUserCache( String email ) {}
@@ -79,13 +80,23 @@ public class UserService {
 
     public UserResponse getUserResponse( User user ) {
 
+        User loggedInUser = loggedInUserService.getLoginUser();
+
         UserResponse userResponse = new UserResponse();
         userResponse.setId( user.getId() );
         userResponse.setName( user.getName() );
-        userResponse.setDepartment( user.getDepartment() );
         userResponse.setEmail( user.getEmail() );
-        userResponse.setRole( user.getRole() );
         userResponse.setDateOfJoining( user.getDateOfJoining() );
+
+        if( Objects.equals( loggedInUser.getRole(), Role.ADMIN ) ){
+            userResponse.setDepartment( user.getDepartment().getvalue() );
+            userResponse.setRole( user.getRole().getValue() );
+        }
+        else{
+            userResponse.setDesignation( user.getDesignation() );
+            userResponse.setPhoneNumber( user.getPhoneNumber() );
+        }
+
         return userResponse;
     }
 
@@ -148,7 +159,7 @@ public class UserService {
                 .collect( Collectors.toList() );
 
         List<EnumResponse> roles = Arrays.stream( Role.values() )
-                .map( role -> new EnumResponse( role.getvalue(), role.toString() ) )
+                .map( role -> new EnumResponse( role.getValue(), role.toString() ) )
                 .collect( Collectors.toList() );
 
         List<EnumResponse>bloodGroups = Arrays.stream( BloodGroup.values() )

@@ -42,8 +42,12 @@ public class AnnouncementService {
                 .map( AnnouncementResponse::new )
                 .toList();
 
-        return new PaginatedApiResponse<>( announcementResponses, pageable.getPageNumber(),
-                announcementPage.getTotalPages(), announcementPage.getTotalElements() );
+        return new PaginatedApiResponse<>(
+                announcementResponses,
+                pageable.getPageNumber(),
+                announcementPage.getTotalPages(),
+                announcementPage.getTotalElements()
+        );
     }
 
     private Specification<Announcement> getAnnouncementSpecification( GetAnnouncementRequest request ) {
@@ -54,9 +58,9 @@ public class AnnouncementService {
 
     @Transactional
     public void deleteAnnouncement( Long id ) {
-        if ( !announcementRepository.existsById( id ) ) {
+        if ( !announcementRepository.existsById( id ) )
             throw new NotFoundException( "Announcement", id );
-        }
+
         announcementRepository.deleteById( id );
     }
 

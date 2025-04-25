@@ -1,14 +1,11 @@
-package com.digiHR.leavecountsetting.Request;
+package com.digiHR.setting.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
-@Getter
-@Setter
-public class LeaveCountSetting {
-
+@AllArgsConstructor
+public class LeaveCountSettingResponse {
     private Integer totalCasualLeaves;
     private Integer totalSickLeaves;
     private Integer totalVacationLeaves;

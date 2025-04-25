@@ -9,7 +9,7 @@ public enum Role {
 
     private final String name;
 
-    public String getvalue(){
+    public String getValue(){
         return name;
     }
 

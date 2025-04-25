@@ -11,9 +11,9 @@ import com.digiHR.leave.request.UpdateLeaveStatusRequest;
 import com.digiHR.leave.response.FilterOptionResponse;
 import com.digiHR.leave.response.LeaveResponse;
 import com.digiHR.leave.response.UserLeaveSummaryResponse;
-import com.digiHR.leavecountsetting.Request.LeaveCountSetting;
-import com.digiHR.leavecountsetting.model.Setting;
-import com.digiHR.leavecountsetting.repository.SettingRepository;
+import com.digiHR.setting.Request.LeaveCountSetting;
+import com.digiHR.setting.model.Setting;
+import com.digiHR.setting.repository.SettingRepository;
 import com.digiHR.user.Department;
 import com.digiHR.user.model.User;
 import com.digiHR.user.service.LoggedInUserService;
@@ -56,8 +56,12 @@ public class LeaveService {
                 .map( LeaveResponse::new )
                 .toList();
 
-        return new PaginatedApiResponse<>( leaveResponses, pageable.getPageNumber(),
-                leavePage.getTotalPages(), leavePage.getTotalElements() );
+        return new PaginatedApiResponse<>(
+                leaveResponses,
+                pageable.getPageNumber(),
+                leavePage.getTotalPages(),
+                leavePage.getTotalElements()
+        );
     }
 
     private Specification<Leave> getLeaveSpecification( GetLeaveRequest request ) {
@@ -89,15 +93,15 @@ public class LeaveService {
     public FilterOptionResponse getFilterOptions() {
 
         List<EnumResponse> departments = Arrays.stream( Department.values() )
-                .map( department -> new EnumResponse( department.name(), department.toString()) )
+                .map( department -> new EnumResponse( department.getvalue(), department.toString()) )
                 .collect( Collectors.toList() );
 
         List<EnumResponse> leaveReasons = Arrays.stream( LeaveReason.values() )
-                .map( reason -> new EnumResponse( reason.name(), reason.toString()) )
+                .map( reason -> new EnumResponse( reason.getName(), reason.toString()) )
                 .collect( Collectors.toList() );
 
         List<EnumResponse> requestStatuses = Arrays.stream( RequestStatus.values() )
-                .map( status -> new EnumResponse( status.name(), status.toString()) )
+                .map( status -> new EnumResponse( status.getName(), status.toString()) )
                 .collect( Collectors.toList() );
 
         return new FilterOptionResponse( departments, leaveReasons, requestStatuses );
