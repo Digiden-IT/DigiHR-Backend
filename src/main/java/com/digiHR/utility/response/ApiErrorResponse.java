@@ -1,7 +1,6 @@
 package com.digiHR.utility.response;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 public class ApiErrorResponse {

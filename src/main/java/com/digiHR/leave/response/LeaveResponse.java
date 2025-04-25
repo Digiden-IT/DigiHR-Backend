@@ -30,12 +30,12 @@ public class LeaveResponse {
        SimpleDateFormat formatter = new SimpleDateFormat( "MMM d, yyyy" );
        this.requestDate = formatter.format( leave.getRequestDate() );
        this.startDate = leave.getStartDate();
-       this.endDate= leave.getEndDate();
-       this.leaveReason=leave.getLeaveReason().getName();
+       this.endDate = leave.getEndDate();
+       this.leaveReason = leave.getLeaveReason().getName();
        this.requestStatus = leave.getRequestStatus().getName();
-       this.numberOfDays = calculateNumberOfDays(leave.getStartDate(), leave.getEndDate());
+       this.numberOfDays = calculateNumberOfDays( leave.getStartDate(), leave.getEndDate() );
    }
-    private int calculateNumberOfDays(Date start, Date end) {
+    private int calculateNumberOfDays( Date start, Date end ) {
         long diff = end.getTime() - start.getTime();
         long days = ( diff / (1000 * 60 * 60 * 24) ) + 1;
         return (int) days;

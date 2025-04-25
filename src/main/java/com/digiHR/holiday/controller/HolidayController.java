@@ -40,8 +40,8 @@ public class HolidayController {
     }
 
     @DeleteMapping( "/{id}" )
-    public ApiResponse<String> deleteHoliday(@PathVariable Long id ) {
+    public ApiResponse<?> deleteHoliday( @PathVariable Long id ) {
         holidayService.deleteHoliday( id );
-        return new ApiResponse<>( "Holiday deleted successfully", 200 );
+        return ApiResponse.success( "Holiday deleted successfully" );
     }
 }

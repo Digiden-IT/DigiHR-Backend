@@ -18,4 +18,8 @@ public class ApiResponse<T> {
         this.message = message;
         this.status = status;
     }
+
+    public static ApiResponse<?> success( String message ) {
+        return new ApiResponse<>( message, 200 );
+    }
 }
