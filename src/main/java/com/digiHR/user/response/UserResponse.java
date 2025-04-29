@@ -2,6 +2,7 @@ package com.digiHR.user.response;
 
 import com.digiHR.user.*;
 import com.digiHR.user.model.User;
+import com.digiHR.utility.response.EnumResponse;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,26 +18,26 @@ public class UserResponse {
     private String designation;
     private String dateOfBirth;
     private String address;
-    private Department department;
-    private Role role;
-    private BloodGroup bloodGroup;
-    private Gender gender;
-    private EmployeeType employeeType;
     private String dateOfJoining;
+    private String department;
+    private String role;
+    private String bloodGroup;
+    private String gender;
+    private String employeeType;
 
     public UserResponse( User user ) {
         this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();
         this.employeeCode = user.getEmployeeCode();
-        this.employeeType = user.getEmployeeType();
         this.designation = user.getDesignation();
         this.dateOfBirth = user.getDateOfBirth();
         this.address = user.getAddress();
-        this.department = user.getDepartment();
-        this.gender = user.getGender();
-        this.role = user.getRole();
-        this.bloodGroup = user.getBloodGroup();
         this.dateOfJoining = user.getDateOfJoining();
+        this.department = user.getDepartment() != null ? user.getDepartment().name() : null;
+        this.role = user.getRole() != null ? user.getRole().name() : null;
+        this.bloodGroup = user.getBloodGroup() != null ? user.getBloodGroup().name() : null;
+        this.gender = user.getGender() != null ? user.getGender().name() : null;
+        this.employeeType = user.getEmployeeType() != null ? user.getEmployeeType().name() : null;
     }
 }
