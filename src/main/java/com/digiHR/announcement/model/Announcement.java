@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Data
@@ -30,12 +31,12 @@ public class Announcement {
     private User postedBy;
 
     @Column( name = "announcementDate" )
-    private LocalDateTime announcementDate;
+    private Date announcementDate;
 
     public Announcement( AddAnnouncementRequest request, User user ) {
         this.title = request.getTitle();
         this.description = request.getDescription();
         this.postedBy = user;
-        this.announcementDate = LocalDateTime.now();
+        this.announcementDate = new Date();
     }
 }

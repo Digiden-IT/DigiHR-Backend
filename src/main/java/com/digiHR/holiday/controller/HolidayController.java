@@ -4,6 +4,7 @@ import com.digiHR.holiday.request.AddHolidayRequest;
 import com.digiHR.holiday.request.GetHolidayRequest;
 import com.digiHR.holiday.response.HolidayResponse;
 import com.digiHR.holiday.service.HolidayService;
+import com.digiHR.utility.response.ApiResponse;
 import com.digiHR.utility.response.PaginatedApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,8 @@ public class HolidayController {
     }
 
     @DeleteMapping( "/{id}" )
-    public ResponseEntity<String> deleteHoliday( @PathVariable Long id ) {
+    public ApiResponse<?> deleteHoliday( @PathVariable Long id ) {
         holidayService.deleteHoliday( id );
-        return ResponseEntity.ok( "Holiday deleted successfully" );
+        return ApiResponse.success( "Holiday deleted successfully" );
     }
 }
