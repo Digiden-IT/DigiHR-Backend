@@ -84,8 +84,7 @@ public class UserService {
         userResponse.setName( user.getName() );
         userResponse.setDepartment(String.valueOf( new EnumResponse( user.getDepartment().getvalue(), user.getDepartment().toString() ) ) );
         userResponse.setEmail( user.getEmail() );
-        userResponse.setRole( String.valueOf( new EnumResponse(user.getRole().getvalue(), user.getRole().toString() ) ) );
-        userResponse.setDateOfJoining( user.getDateOfJoining() );
+        userResponse.setRole( String.valueOf( new EnumResponse(user.getRole().getValue(), user.getRole().toString() ) ) );        userResponse.setDateOfJoining( user.getDateOfJoining() );
         return userResponse;
     }
 
@@ -147,7 +146,7 @@ public class UserService {
                 .collect( Collectors.toList() );
 
         List<EnumResponse> roles = Arrays.stream( Role.values() )
-                .map( role -> new EnumResponse( role.getvalue(), role.toString() ) )
+                .map( role -> new EnumResponse( role.getValue(), role.toString() ) )
                 .collect( Collectors.toList() );
 
         List<EnumResponse>bloodGroups = Arrays.stream( BloodGroup.values() )
