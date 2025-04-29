@@ -1,6 +1,7 @@
 package com.digiHR.user.response;
 
 import com.digiHR.user.model.User;
+import com.digiHR.utility.response.EnumResponse;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,11 +18,11 @@ public class UserResponse {
     private String dateOfBirth;
     private String address;
     private String dateOfJoining;
-    private String department;
-    private String role;
-    private String bloodGroup;
-    private String gender;
-    private String employeeType;
+    private EnumResponse department;
+    private EnumResponse role;
+    private EnumResponse bloodGroup;
+    private EnumResponse gender;
+    private EnumResponse employeeType;
 
     public UserResponse( User user ) {
         this.id = user.getId();
@@ -33,10 +34,15 @@ public class UserResponse {
         this.dateOfBirth = user.getDateOfBirth();
         this.address = user.getAddress();
         this.dateOfJoining = user.getDateOfJoining();
-        this.department = user.getDepartment() != null ? user.getDepartment().name() : null;
-        this.role = user.getRole() != null ? user.getRole().name() : null;
-        this.bloodGroup = user.getBloodGroup() != null ? user.getBloodGroup().name() : null;
-        this.gender = user.getGender() != null ? user.getGender().name() : null;
-        this.employeeType = user.getEmployeeType() != null ? user.getEmployeeType().name() : null;
+        this.department = user.getDepartment() != null ?
+                new EnumResponse( user.getDepartment().getvalue(), user.getDepartment().toString() ) : null;
+        this.role = user.getRole() != null ?
+                new EnumResponse( user.getRole().getName(), user.getRole().toString() ) : null;
+        this.bloodGroup = user.getBloodGroup() != null ?
+                new EnumResponse( user.getBloodGroup().getvalue() , user.getBloodGroup().toString() ) : null;
+        this.gender = user.getGender() != null ?
+                new EnumResponse( user.getGender().getvalue() , user.getGender().toString() ) : null;
+        this.employeeType = user.getEmployeeType() != null ?
+                new EnumResponse( user.getEmployeeType().getvalue() , user.getEmployeeType().toString() ) : null;
     }
 }

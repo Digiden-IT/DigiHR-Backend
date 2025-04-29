@@ -82,9 +82,15 @@ public class UserService {
         UserResponse userResponse = new UserResponse();
         userResponse.setId( user.getId() );
         userResponse.setName( user.getName() );
-        userResponse.setDepartment(String.valueOf( new EnumResponse( user.getDepartment().getvalue(), user.getDepartment().toString() ) ) );
+
+        if( user.getDepartment() != null )
+          userResponse.setDepartment(new EnumResponse( user.getDepartment().getvalue(), user.getDepartment().toString() ) );
         userResponse.setEmail( user.getEmail() );
-        userResponse.setRole( String.valueOf( new EnumResponse(user.getRole().getValue(), user.getRole().toString() ) ) );        userResponse.setDateOfJoining( user.getDateOfJoining() );
+
+        if ( user.getRole() != null )
+          userResponse.setRole(  new EnumResponse(user.getRole().getValue(), user.getRole().toString() )  );
+
+        userResponse.setDateOfJoining( user.getDateOfJoining() );
         return userResponse;
     }
 
