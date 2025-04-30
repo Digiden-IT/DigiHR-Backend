@@ -39,7 +39,6 @@ public class UserService {
 
     @PersistenceContext
     private final EntityManager entityManager;
-    private final LoggedInUserService loggedInUserService;
 
     @CacheEvict( value = "userCache", key = "#email" )
     public void evictUserCache( String email ) {}
@@ -80,23 +79,18 @@ public class UserService {
 
     public UserResponse getUserResponse( User user ) {
 
-        User loggedInUser = loggedInUserService.getLoginUser();
-
         UserResponse userResponse = new UserResponse();
         userResponse.setId( user.getId() );
         userResponse.setName( user.getName() );
+
+        if( user.getDepartment() != null )
+          userResponse.setDepartment(new EnumResponse( user.getDepartment().getvalue(), user.getDepartment().toString() ) );
         userResponse.setEmail( user.getEmail() );
+
+        if ( user.getRole() != null )
+          userResponse.setRole(  new EnumResponse(user.getRole().getValue(), user.getRole().toString() )  );
+
         userResponse.setDateOfJoining( user.getDateOfJoining() );
-
-        if( Objects.equals( loggedInUser.getRole(), Role.ADMIN ) ){
-            userResponse.setDepartment( user.getDepartment().getvalue() );
-            userResponse.setRole( user.getRole().getValue() );
-        }
-        else{
-            userResponse.setDesignation( user.getDesignation() );
-            userResponse.setPhoneNumber( user.getPhoneNumber() );
-        }
-
         return userResponse;
     }
 
@@ -142,8 +136,7 @@ public class UserService {
     @Transactional
     public void deleteUser( Long id ) {
 
-        User user = userRepository.findById( id )
-                .orElseThrow( () -> new NotFoundException( "user", id ) );
+        User user = entityManager.getReference( User.class, id );
         user.setIsDeleted( true );
         userRepository.save( user );
     }
