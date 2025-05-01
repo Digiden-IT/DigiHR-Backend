@@ -1,5 +1,6 @@
 package com.digiHR.utility.response;
 
+import com.digiHR.user.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
