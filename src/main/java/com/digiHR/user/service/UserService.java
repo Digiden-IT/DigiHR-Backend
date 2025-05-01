@@ -80,6 +80,8 @@ public class UserService {
 
     public UserResponse getUserResponse( User user ) {
 
+        User loggedInUser = loggedInUserService.getLoginUser();
+
         UserResponse userResponse = new UserResponse();
         userResponse.setId( user.getId() );
         userResponse.setName( user.getName() );
@@ -88,7 +90,7 @@ public class UserService {
 
         if( Objects.equals( loggedInUser.getRole(), Role.ADMIN ) ){
             userResponse.setDepartment( new EnumResponse( user.getDepartment().getvalue(), user.getDepartment().toString() ) );
-            userResponse.setRole( new EnumResponse(user.getRole().getValue(), user.getRole().toString() )  );
+            userResponse.setRole( new EnumResponse(user.getRole().getValue(), user.getRole().toString() ) );
         }
         else{
             userResponse.setDesignation( user.getDesignation() );
