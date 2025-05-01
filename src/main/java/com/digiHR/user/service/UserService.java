@@ -96,7 +96,6 @@ public class UserService {
             userResponse.setDesignation( user.getDesignation() );
             userResponse.setPhoneNumber( user.getPhoneNumber() );
         }
-
         return userResponse;
     }
 
