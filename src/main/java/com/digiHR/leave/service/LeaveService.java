@@ -93,15 +93,15 @@ public class LeaveService {
     public FilterOptionResponse getFilterOptions() {
 
         List<EnumResponse> departments = Arrays.stream( Department.values() )
-                .map( department -> new EnumResponse( department.getvalue(), department.toString()) )
+                .map( department -> new EnumResponse( department.getValue(), department.toString()) )
                 .collect( Collectors.toList() );
 
         List<EnumResponse> leaveReasons = Arrays.stream( LeaveReason.values() )
-                .map( reason -> new EnumResponse( reason.getName(), reason.toString()) )
+                .map( reason -> new EnumResponse( reason.getValue(), reason.toString()) )
                 .collect( Collectors.toList() );
 
         List<EnumResponse> requestStatuses = Arrays.stream( RequestStatus.values() )
-                .map( status -> new EnumResponse( status.getName(), status.toString()) )
+                .map( status -> new EnumResponse( status.getValue(), status.toString()) )
                 .collect( Collectors.toList() );
 
         return new FilterOptionResponse( departments, leaveReasons, requestStatuses );

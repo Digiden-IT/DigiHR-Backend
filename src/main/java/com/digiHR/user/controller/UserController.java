@@ -56,7 +56,6 @@ public class UserController {
         return new ApiResponse<>( "User deleted successfully", 200 );
     }
 
-    @PreAuthorize( "hasAuthority( 'Admin' )" )
     @GetMapping( "/filter-options" )
     public ResponseEntity<FilterOptionResponse> getFilterOptions() {
         FilterOptionResponse options = userService.getFilterOptions();

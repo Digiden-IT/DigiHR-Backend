@@ -35,14 +35,14 @@ public class UserResponse {
         this.address = user.getAddress();
         this.dateOfJoining = user.getDateOfJoining();
         this.department = user.getDepartment() != null ?
-                new EnumResponse( user.getDepartment().getvalue(), user.getDepartment().toString() ) : null;
+                new EnumResponse( user.getDepartment().getValue(), user.getDepartment().name() ) : null;
         this.role = user.getRole() != null ?
-                new EnumResponse( user.getRole().getName(), user.getRole().toString() ) : null;
+                new EnumResponse( user.getRole().getValue(), user.getRole().name() ) : null;
         this.bloodGroup = user.getBloodGroup() != null ?
-                new EnumResponse( user.getBloodGroup().getvalue() , user.getBloodGroup().toString() ) : null;
+                new EnumResponse( user.getBloodGroup().getValue() , user.getBloodGroup().name() ) : null;
         this.gender = user.getGender() != null ?
-                new EnumResponse( user.getGender().getvalue() , user.getGender().toString() ) : null;
+                new EnumResponse( user.getGender().getvalue() , user.getGender().name() ) : null;
         this.employeeType = user.getEmployeeType() != null ?
-                new EnumResponse( user.getEmployeeType().getvalue() , user.getEmployeeType().toString() ) : null;
+                new EnumResponse( user.getEmployeeType().getValue() , user.getEmployeeType().name() ) : null;
     }
 }

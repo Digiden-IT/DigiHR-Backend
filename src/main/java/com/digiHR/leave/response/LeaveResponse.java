@@ -1,7 +1,5 @@
 package com.digiHR.leave.response;
 
-import com.digiHR.leave.LeaveReason;
-import com.digiHR.leave.RequestStatus;
 import com.digiHR.leave.model.Leave;
 import com.digiHR.utility.response.EnumResponse;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -32,9 +30,9 @@ public class LeaveResponse {
        this.endDate = leave.getEndDate();
        this.numberOfDays = calculateNumberOfDays( leave.getStartDate(), leave.getEndDate() );
        this.leaveReason = leave.getLeaveReason() != null ?
-               new EnumResponse( leave.getLeaveReason().getName(), leave.getLeaveReason().name() ) : null;
+               new EnumResponse( leave.getLeaveReason().getValue(), leave.getLeaveReason().name() ) : null;
        this.requestStatus = leave.getRequestStatus() != null ?
-               new EnumResponse( leave.getRequestStatus().getName(), leave.getRequestStatus().name() ) : null;
+               new EnumResponse( leave.getRequestStatus().getValue(), leave.getRequestStatus().name() ) : null;
    }
     private int calculateNumberOfDays( Date start, Date end ) {
         long diff = end.getTime() - start.getTime();

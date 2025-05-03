@@ -89,7 +89,7 @@ public class UserService {
         userResponse.setDateOfJoining( user.getDateOfJoining() );
 
         if( Objects.equals( loggedInUser.getRole(), Role.ADMIN ) ){
-            userResponse.setDepartment( new EnumResponse( user.getDepartment().getvalue(), user.getDepartment().toString() ) );
+            userResponse.setDepartment( new EnumResponse( user.getDepartment().getValue(), user.getDepartment().toString() ) );
             userResponse.setRole( new EnumResponse(user.getRole().getValue(), user.getRole().toString() ) );
         }
         else{
@@ -150,23 +150,23 @@ public class UserService {
     public FilterOptionResponse getFilterOptions() {
 
         List<EnumResponse> departments = Arrays.stream( Department.values() )
-                .map( department -> new EnumResponse( department.getvalue(), department.toString() ) )
+                .map( department -> new EnumResponse( department.getValue(), department.name() ) )
                 .collect( Collectors.toList() );
 
         List<EnumResponse> employeeTypes = Arrays.stream( EmployeeType.values() )
-                .map( employeeType -> new EnumResponse( employeeType.getvalue(), employeeType.toString() ) )
+                .map( employeeType -> new EnumResponse( employeeType.getValue(), employeeType.name() ) )
                 .collect( Collectors.toList() );
 
         List<EnumResponse> roles = Arrays.stream( Role.values() )
-                .map( role -> new EnumResponse( role.getValue(), role.toString() ) )
+                .map( role -> new EnumResponse( role.getValue(), role.name() ) )
                 .collect( Collectors.toList() );
 
         List<EnumResponse>bloodGroups = Arrays.stream( BloodGroup.values() )
-                .map( bloodGroup -> new EnumResponse( bloodGroup.getvalue(), bloodGroup.toString() ) )
+                .map( bloodGroup -> new EnumResponse( bloodGroup.getValue(), bloodGroup.name() ) )
                 .collect( Collectors.toList() );
 
         List<EnumResponse>genders = Arrays.stream( Gender.values() )
-                .map( gender -> new EnumResponse( gender.getvalue(), gender.toString() ) )
+                .map( gender -> new EnumResponse( gender.getvalue(), gender.name() ) )
                 .collect( Collectors.toList() );
 
         return new FilterOptionResponse( departments, roles, employeeTypes, bloodGroups, genders );

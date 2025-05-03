@@ -1,5 +1,8 @@
 package com.digiHR.user;
 
+import lombok.Getter;
+
+@Getter
 public enum BloodGroup {
     A_POSITIVE( "A+" ),
     A_NEGATIVE( "A-" ),
@@ -10,13 +13,9 @@ public enum BloodGroup {
     AB_POSITIVE( "AB+" ),
     AB_NEGATIVE( "AB-" );
 
-    private final String bloodGroup;
+    private final String value;
 
-    public String getvalue(){
-        return bloodGroup;
-    }
-
-    BloodGroup( String bloodGroup ) {
-        this.bloodGroup = bloodGroup;
+    BloodGroup( String value ) {
+        this.value = value;
     }
 }
