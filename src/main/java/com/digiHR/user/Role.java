@@ -7,13 +7,9 @@ public enum Role {
     ADMIN( "Admin" ),
     USER( "User" );
 
-    private final String name;
+    private final String value;
 
-    public String getValue(){
-        return name;
-    }
-
-    Role( String name ) {
-        this.name = name;
+    Role( String value ) {
+        this.value = value;
     }
 }

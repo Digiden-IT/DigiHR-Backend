@@ -12,13 +12,9 @@ public enum Department {
     FINANCE( "Finance" ),
     OTHER( "other" );
 
-    private final String department;
+    private final String value;
 
-    public String getvalue(){
-        return department;
-    }
-
-    Department( String department ) {
-        this.department = department;
+    Department( String value ) {
+        this.value = value;
     }
 }

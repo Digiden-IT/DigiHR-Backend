@@ -8,9 +8,9 @@ public enum RequestStatus {
     PENDING( "Pending" ),
     REJECTED( "Rejected" );
 
-    private final String name;
+    private final String value;
 
-    RequestStatus( String name ) {
-        this.name = name;
+    RequestStatus( String value ) {
+        this.value = value;
     }
 }

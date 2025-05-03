@@ -8,9 +8,9 @@ public enum LeaveReason {
     SICK_LEAVE("Sick Leave"),
     VACATION_LEAVE("Vacation Leave");
 
-    private final String name;
+    private final String value;
 
-    LeaveReason( String name ) {
-        this.name = name;
+    LeaveReason( String value ) {
+        this.value = value;
     }
 }
